@@ -1,0 +1,248 @@
+{
+  "execution_time_ms": 31.93,
+  "char_count": 4087,
+  "total_blocks": 23,
+  "text_block_count": 23,
+  "image_block_count": 0,
+  "span_count": 606,
+  "unique_fonts": [
+    "Inconsolatazi4-Regular",
+    "LinLibertineT",
+    "LinLibertineTB",
+    "LinLibertineTI",
+    "NotoSansCJKjp-Regular"
+  ],
+  "raw_text_excerpt": "28\n69\n69\n29\n20\n46\n61\n73\n74\n20\n74\n72\n61\n69\n6e\n69\n6e\n67\n20\n61\n6e\n64\n69\n6e\n66\n65\n72\n65\n6e\n63\n65\n3a\n20\n63\n6f\n6d\n70\n75\n74\n61\n74\n69\n6f\n6e\n20\n(\ni\ni\n)\n \nF\na\ns\nt\n \nt\nr\na\ni\nn\ni\nn\ng\n \na\nn\nd\ni\nn\nf\ne\nr\ne\nn\nc\ne\n:\n \nc\no\nm\np\nu\nt\na\nt\ni\no\nn\n \nStage 0\n61\n6e\n64\n20\n6d\n65\n6d\n6f\n72\n79\n73\n63\n61\n6c\n65\n73\n20\n6c\n69\n6e\n65\n61\n72\n6c\n79\n20\n69\n6e\n20\n73\n65\n71\n75\n65\n6e\n63\n65\n20\n6c\n65\n6e\n67\n74\n68\n20\na\nn\nd\n \nm\ne\nm\no\nr\ny\ns\nc\na\nl\ne\ns\n \nl\ni\nn\ne\na\nr\nl\ny\n \ni\nn\n \ns\ne\nq\nu\ne\nn\nc\ne\n \nl\ne\nn\ng\nt\nh\n \nStage 0\n64\n75\n72\n69\n6e\n67\n74\n72\n61\n69\n6e\n6",
+  "structured_blocks": [
+    {
+      "block_no": 0,
+      "bbox": [
+        89.41,
+        74.22,
+        514.19,
+        86.43
+      ],
+      "text": "28\n69\n69\n29\n20\n46\n61\n73\n74\n20\n74\n72\n61\n69\n6e\n69\n6e\n67\n20\n61\n6e\n64\n69\n6e\n66\n65\n72\n65\n6e\n63\n65\n3a\n20\n63\n6f\n6d\n70\n75\n74\n61\n74\n69\n6f\n6e\n20"
+    },
+    {
+      "block_no": 1,
+      "bbox": [
+        90.77,
+        80.97,
+        512.48,
+        98.2
+      ],
+      "text": "(\ni\ni\n)\n \nF\na\ns\nt\n \nt\nr\na\ni\nn\ni\nn\ng\n \na\nn\nd\ni\nn\nf\ne\nr\ne\nn\nc\ne\n:\n \nc\no\nm\np\nu\nt\na\nt\ni\no\nn"
+    },
+    {
+      "block_no": 2,
+      "bbox": [
+        532.1,
+        87.78,
+        558.52,
+        109.77
+      ],
+      "text": "Stage 0"
+    },
+    {
+      "block_no": 3,
+      "bbox": [
+        89.41,
+        112.16,
+        514.19,
+        124.37
+      ],
+      "text": "61\n6e\n64\n20\n6d\n65\n6d\n6f\n72\n79\n73\n63\n61\n6c\n65\n73\n20\n6c\n69\n6e\n65\n61\n72\n6c\n79\n20\n69\n6e\n20\n73\n65\n71\n75\n65\n6e\n63\n65\n20\n6c\n65\n6e\n67\n74\n68\n20"
+    },
+    {
+      "block_no": 4,
+      "bbox": [
+        90.1,
+        118.91,
+        512.48,
+        136.13
+      ],
+      "text": "a\nn\nd\n \nm\ne\nm\no\nr\ny\ns\nc\na\nl\ne\ns\n \nl\ni\nn\ne\na\nr\nl\ny\n \ni\nn\n \ns\ne\nq\nu\ne\nn\nc\ne\n \nl\ne\nn\ng\nt\nh"
+    },
+    {
+      "block_no": 5,
+      "bbox": [
+        532.1,
+        125.72,
+        558.52,
+        147.71
+      ],
+      "text": "Stage 0"
+    },
+    {
+      "block_no": 6,
+      "bbox": [
+        89.41,
+        150.09,
+        514.19,
+        162.31
+      ],
+      "text": "64\n75\n72\n69\n6e\n67\n74\n72\n61\n69\n6e\n69\n6e\n67\n2c\n61\n6e\n64\n20\n75\n6e\n72\n6f\n6c\n6c\n69\n6e\n67\n74\n68\n65\n20\n6d\n6f\n64\n65\n6c\n20\n61\n75\n74\n6f\n72\n65\n67"
+    },
+    {
+      "block_no": 7,
+      "bbox": [
+        89.93,
+        156.84,
+        513.5,
+        174.07
+      ],
+      "text": "d\nu\nr\ni\nn\ng\nt\nr\na\ni\nn\ni\nn\ng\n,\na\nn\nd\n \nu\nn\nr\no\nl\nl\ni\nn\ng\nt\nh\ne\n \nm\no\nd\ne\nl\n \na\nu\nt\no\nr\ne\ng"
+    },
+    {
+      "block_no": 8,
+      "bbox": [
+        532.1,
+        163.66,
+        558.52,
+        185.65
+      ],
+      "text": "Stage 0"
+    },
+    {
+      "block_no": 9,
+      "bbox": [
+        89.41,
+        188.03,
+        514.18,
+        200.25
+      ],
+      "text": "72\n65\n73\n73\n69\n76\n65\n6c\n79\n64\n75\n72\n69\n6e\n67\n20\n69\n6e\n66\n65\n72\n65\n6e\n63\n65\n72\n65\n71\n75\n69\n72\n65\n73\n20\n6f\n6e\n6c\n79\n63\n6f\n6e\n73\n74\n61\n6e"
+    },
+    {
+      "block_no": 10,
+      "bbox": [
+        90.62,
+        194.78,
+        513.64,
+        212.01
+      ],
+      "text": "r\ne\ns\ns\ni\nv\ne\nl\ny\nd\nu\nr\ni\nn\ng\n \ni\nn\nf\ne\nr\ne\nn\nc\ne\nr\ne\nq\nu\ni\nr\ne\ns\n \no\nn\nl\ny\nc\no\nn\ns\nt\na\nn"
+    },
+    {
+      "block_no": 11,
+      "bbox": [
+        532.1,
+        201.6,
+        558.52,
+        223.58
+      ],
+      "text": "Stage 0"
+    },
+    {
+      "block_no": 12,
+      "bbox": [
+        89.41,
+        225.97,
+        514.19,
+        238.18
+      ],
+      "text": "74\n20\n74\n69\n6d\n65\n20\n70\n65\n72\n20\n73\n74\n65\n70\n20\n73\n69\n6e\n63\n65\n20\n69\n74\n20\n64\n6f\n65\n73\n20\n6e\n6f\n74\n20\n72\n65\n71\n75\n69\n72\n65\n20\n61\n20\n63"
+    },
+    {
+      "block_no": 13,
+      "bbox": [
+        90.66,
+        232.85,
+        513.34,
+        249.95
+      ],
+      "text": "t\n \nt\ni\nm\ne\n \np\ne\nr\n \ns\nt\ne\np\n \ns\ni\nn\nc\ne\n \ni\nt\n \nd\no\ne\ns\n \nn\no\nt\n \nr\ne\nq\nu\ni\nr\ne\n \na\n \nc"
+    },
+    {
+      "block_no": 14,
+      "bbox": [
+        532.1,
+        239.53,
+        558.52,
+        261.52
+      ],
+      "text": "Stage 0"
+    },
+    {
+      "block_no": 15,
+      "bbox": [
+        72.0,
+        277.02,
+        561.6,
+        299.04
+      ],
+      "text": "Figure 16: Visualization of boundary positions dynamically drawn by H-Net (1-stage). The given text is perturbed that\nsome whitespaces are missing. H-Net detects word boundaries even if they are not explicitly separated by whitespaces."
+    },
+    {
+      "block_no": 16,
+      "bbox": [
+        72.0,
+        322.55,
+        267.65,
+        332.51
+      ],
+      "text": "too much can harm the language-modeling loss."
+    },
+    {
+      "block_no": 17,
+      "bbox": [
+        72.0,
+        348.3,
+        561.6,
+        418.13
+      ],
+      "text": "Tokenization bias.\nWe are not able to send all auxiliary losses to zero because online prediction of BPE boundaries\nis an impossible task. Phan et al. (2025) coined the term “tokenization bias\" to represent the fact that the tokenization\nprocess implicitly contains next-byte information. For example, the Llama 3 tokenizer tokenizes the strings _distill\nand _distinct into [_dist, ill] and [_distinct]. Prior use of this term has been to suggest that if an autoregressive\nlanguage model is prompted with _dist, the nature of its training will be that it will never complete with inct (this is in\nfact a flaw of all tokenization-based models)."
+    },
+    {
+      "block_no": 18,
+      "bbox": [
+        71.63,
+        426.11,
+        564.09,
+        471.93
+      ],
+      "text": "For us, however, tokenization bias implies that we cannot determine whether or not the i in _disti is the start of a new\nword until after seeing the next character. In fact, the problem can be even worse–consider _applicable (becomes [_app,\nlicable]) and _applicant (becomes [_applicant]): Determining whether l is the start of a token requires knowing the\nnext two bytes as well."
+    },
+    {
+      "block_no": 19,
+      "bbox": [
+        71.52,
+        479.89,
+        563.13,
+        525.73
+      ],
+      "text": "While the H-Net does use the main network, it is not able to exactly match the behavior of the original tokenized model.\nInstead, it is finding slightly different representations of tokens to use in the main stage. Recent work has shown that\ntokenized language models can process tokenization sequences distinct from the “canonical\" greedy tokenization (Vieira et\nal. 2024), so it is possible our H-Net found another alternate representation that the pretrained model could process."
+    },
+    {
+      "block_no": 20,
+      "bbox": [
+        72.0,
+        533.75,
+        561.79,
+        579.53
+      ],
+      "text": "Remark. One might ask if our distilled model has simply learned to tokenize on spaces (since spaces are always the start\nof a new token). It has not. Simply tokenizing on spaces would yield a sub-95% boundary prediction accuracy; however, our\ndistilled model gets boundary prediction accuracy above 99.5%. This suggests that the resulting H-Net is able to recognize\nsome, but not all, subword boundaries."
+    },
+    {
+      "block_no": 21,
+      "bbox": [
+        71.7,
+        595.31,
+        562.7,
+        677.11
+      ],
+      "text": "Results.\nThe results from our distillation procedure are shown in Table 8. H-Net is able to approximately match\nperformance across almost all benchmarks; in general, H-Net is not able to replicate the behavior of the tokenized model\nexactly, so it is not unexpected that the benchmarks are slightly worse. Byte-Latent Transformer (Pagnoni et al. 2024,\nTable 5) performs a similar experiment, and they see a greater gap among most benchmarks (particularly PiQA, Arc-Easy,\nand Arc-Challenge) despite using a much larger amount of data (220B tokens versus 189B bytes); it is possible that this\nperformance difference is due to the fact that a BLT module cannot be supervised to align boundaries the way that\nend-to-end DC can."
+    },
+    {
+      "block_no": 22,
+      "bbox": [
+        312.17,
+        740.83,
+        321.43,
+        750.79
+      ],
+      "text": "39"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "execution_time_ms": 4.02,
+  "char_count": 1024,
+  "total_blocks": 4,
+  "text_block_count": 4,
+  "image_block_count": 0,
+  "span_count": 155,
+  "unique_fonts": [
+    "CMCSC10",
+    "CMR10"
+  ],
+  "raw_text_excerpt": "Moshi: a speech-text foundation model for real-time dialogue\nTable 19: Speaking styles used to fine-tune Moshi.\nagreeing\namazed\namused\nangry\nannoyed\nanxious\nappreciative\ncalm\ncalmly\ncautious\nconcerned\nconfident\nconfused\ncurious\ndefeated\ndefensive\ndefiant\ndetermined\ndisappointed\ndisgusted\ndoubtful\necstatic\nembarrassed\nencouraging\nexcited\nfast\nfrustrated\ngrateful\nhappy\nhesitant\nhurt\nimpatient\nimpressed\nintrigued\njoking\nlaughs\nloud\nnervous\nneutral\noptimistic\npanting\npleading\nproud\nquiet\nreassuring\n",
+  "structured_blocks": [
+    {
+      "block_no": 0,
+      "bbox": [
+        141.71,
+        37.99,
+        466.65,
+        47.96
+      ],
+      "text": "Moshi: a speech-text foundation model for real-time dialogue"
+    },
+    {
+      "block_no": 1,
+      "bbox": [
+        185.58,
+        226.91,
+        426.45,
+        237.82
+      ],
+      "text": "Table 19: Speaking styles used to fine-tune Moshi."
+    },
+    {
+      "block_no": 2,
+      "bbox": [
+        118.6,
+        254.35,
+        493.41,
+        563.34
+      ],
+      "text": "agreeing\namazed\namused\nangry\nannoyed\nanxious\nappreciative\ncalm\ncalmly\ncautious\nconcerned\nconfident\nconfused\ncurious\ndefeated\ndefensive\ndefiant\ndetermined\ndisappointed\ndisgusted\ndoubtful\necstatic\nembarrassed\nencouraging\nexcited\nfast\nfrustrated\ngrateful\nhappy\nhesitant\nhurt\nimpatient\nimpressed\nintrigued\njoking\nlaughs\nloud\nnervous\nneutral\noptimistic\npanting\npleading\nproud\nquiet\nreassuring\nreflective\nrelieved\nremorseful\nresigned\nsad\nsarcastic\nsatisfied\nscared\nsecretive\nserious\nshocked\nshy\nsincere\nskeptical\nslow\nstruggling\nsurprised\nsuspicious\nsympathetic\nterrified\nupset\nurgent\nwhispering\n1920s gangster\nconfident ceo\nconfident lawyer\nconfident leader\ncowboy\ndetective\ndramatic actor\ndrill sergeant\neccentrict scientist\nhacker\nhippie\nhyperactive child\nmedieval knight\nnervous candidate\npirate\npolitician\nrobot\nsarcastic comedian\nscifi alien\nshy teenager\nsnobbish aristocrat\nvillain\nwise sage\nyoung superhero"
+    },
+    {
+      "block_no": 3,
+      "bbox": [
+        301.02,
+        724.96,
+        310.98,
+        734.93
+      ],
+      "text": "66"
+    }
+  ]
+}

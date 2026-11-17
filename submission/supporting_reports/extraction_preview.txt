@@ -1,0 +1,56 @@
+================================================================================
+THE RELAY — RESEARCH PAPERS EXTRACTION PREVIEW
+Generated at: 2026-11-11T11:20:11.106279+00:00
+Total Documents: 3
+================================================================================
+
+PAPER TITLE: Attention Is All You Need
+SOURCE FILE: 1706.03762v7.pdf
+PAPER ID:    1706.03762v7 (Version: v7)
+SHA-256:     bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697
+TOTAL PAGES: 15 | TOTAL CHARACTERS: 39498
+--------------------------------------------------------------------------------
+  [Page 01 / 15] (2858 chars):
+  "Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Parmar∗ Google Research nikip@google.com Jakob Uszkor ... [truncated]"
+
+  [Page 07 / 15] (3321 chars):
+  "length n is smaller than the representation dimensionality d, which is most often the case with sentence representations used by state-of-the-art models in machine translations, such as word-piece [38] and byte-pair [31] representations. To improve computational performance for tasks involving very long sequences, self-attention could be restricted ... [truncated]"
+
+  [Page 15 / 15] (781 chars):
+  "The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just - this is what we are missing ... [truncated]"
+
+================================================================================
+
+PAPER TITLE: Moshi: A Speech-Text Foundation Model for Real-Time Dialogue
+SOURCE FILE: 2410.00037v1.pdf
+PAPER ID:    2410.00037v1 (Version: v1)
+SHA-256:     a687144cc77bea86b0c60ae800ccb1d3e0816033fa5c7960388fe29a0dbfcfac
+TOTAL PAGES: 66 | TOTAL CHARACTERS: 191396
+--------------------------------------------------------------------------------
+  [Page 01 / 66] (2158 chars):
+  "Moshi: a speech-text foundation model for real-time dialogue Moshi: a speech-text foundation model for real-time dialogue Alexandre D´efossez∗ alex@kyutai.org Laurent Mazar´e∗ Manu Orsini Am´elie Royer Patrick P´erez Herv´e J´egou Edouard Grave∗ Neil Zeghidour∗ neil@kyutai.org Kyutai ∗Equal contribution Abstract We introduce Moshi, a speech-text fo ... [truncated]"
+
+  [Page 33 / 66] (2546 chars):
+  "Moshi: a speech-text foundation model for real-time dialogue Table 10: Linguistic impact of model compression on Helium, as measured by MMLU. ‘WXA8’ indicates a model with weights quantized to ‘X’ bits and activations to 8 bits, using integer scalar PTQ. The model size in brackets is given in GygaBytes for a quantization block size of 32, and takes ... [truncated]"
+
+  [Page 66 / 66] (1024 chars):
+  "Moshi: a speech-text foundation model for real-time dialogue Table 19: Speaking styles used to fine-tune Moshi. agreeing amazed amused angry annoyed anxious appreciative calm calmly cautious concerned confident confused curious defeated defensive defiant determined disappointed disgusted doubtful ecstatic embarrassed encouraging excited fast frustr ... [truncated]"
+
+================================================================================
+
+PAPER TITLE: Dynamic Chunking for End-to-End Hierarchical Sequence Modeling
+SOURCE FILE: 2507.07955v2.pdf
+PAPER ID:    2507.07955v2 (Version: v2)
+SHA-256:     04a2b32e6e82853cfc23c5db132750874a86cde99219ec6f664128f4aa83122f
+TOTAL PAGES: 39 | TOTAL CHARACTERS: 145233
+--------------------------------------------------------------------------------
+  [Page 01 / 39] (3872 chars):
+  "Dynamic Chunking for End-to-End Hierarchical Sequence Modeling Sukjun Hwang Carnegie Mellon University sukjunh@cs.cmu.edu Brandon Wang Cartesia AI brandon.wang@cartesia.ai Albert Gu Carnegie Mellon University, Cartesia AI agu@cs.cmu.edu, albert@cartesia.ai Abstract Major progress on language models (LMs) in recent years has largely resulted from mo ... [truncated]"
+
+  [Page 19 / 39] (3829 chars):
+  "40B 60B 80B 100B 120B 140B Total Training Bytes 0.82 0.84 0.86 0.88 0.90 0.92 0.94 Bits-per-byte T2-T2 T1M2-M2T1 M2T1-T1M2 M4-M4 Figure 9: SpaceByte++ encoder-decoder architecture ab- lation using raw byte inputs. We evaluate four encoder- decoder (E0 −D0) configurations: M4-M4 , M2T1-T1M2 and T1M2-M2T1, and T2-T2, where M denotes Mamba layers and ... [truncated]"
+
+  [Page 39 / 39] (4087 chars):
+  "28 69 69 29 20 46 61 73 74 20 74 72 61 69 6e 69 6e 67 20 61 6e 64 69 6e 66 65 72 65 6e 63 65 3a 20 63 6f 6d 70 75 74 61 74 69 6f 6e 20 ( i i ) F a s t t r a i n i n g a n d i n f e r e n c e : c o m p u t a t i o n Stage 0 61 6e 64 20 6d 65 6d 6f 72 79 73 63 61 6c 65 73 20 6c 69 6e 65 61 72 6c 79 20 69 6e 20 73 65 71 75 65 6e 63 65 20 6c ... [truncated]"
+
+================================================================================

@@ -1,0 +1,100 @@
+================================================================================
+THE RELAY — TASK 2.2 CHUNKING PREVIEW REPORT
+Generated at: 2026-11-11T12:06:38.868132+00:00
+================================================================================
+
+STRATEGY: FIXED_SIZE (Tokenizer: hf_local:sentence-transformers/all-MiniLM-L6-v2)
+Total Chunks Across 3 Papers: 209
+--------------------------------------------------------------------------------
+  PAPER: Attention Is All You Need (1706.03762v7)
+  Chunks: 21 | Tokens [min: 374, mean: 513.3, max: 568]
+    - Chunk 1706.03762v7_c00001 | Pages [1] | 534 tokens | 2457 chars:
+      "Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Pa ... [truncated]"
+    - Chunk 1706.03762v7_c00011 | Pages [7, 8] | 524 tokens | 1584 chars:
+      "We trained the base models for a total of 100,000 steps or 12 hours. For our big models,(described on the bottom line of table 3), step time was 1.0 seconds. The big models were trained for 300,000 steps (3.5 days). 5.3 Optimizer We used the Adam optimizer [20] with β1 = 0.9, β2 = 0.98 and ϵ = 10 ... [truncated]"
+    - Chunk 1706.03762v7_c00021 | Pages [14, 15] | 374 tokens | 1559 chars:
+      "The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its applic ... [truncated]"
+
+  PAPER: Moshi: A Speech-Text Foundation Model for Real-Time Dialogue (2410.00037v1)
+  Chunks: 106 | Tokens [min: 194, mean: 512.2, max: 584]
+    - Chunk 2410.00037v1_c00001 | Pages [1, 2] | 573 tokens | 2516 chars:
+      "Moshi: a speech-text foundation model for real-time dialogue Moshi: a speech-text foundation model for real-time dialogue Alexandre D´efossez∗ alex@kyutai.org Laurent Mazar´e∗ Manu Orsini Am´elie Royer Patrick P´erez Herv´e J´egou Edouard Grave∗ Neil Zeghidour∗ neil@kyutai.org Kyutai ∗Equal contribu ... [truncated]"
+    - Chunk 2410.00037v1_c00054 | Pages [33] | 535 tokens | 1390 chars:
+      "The model size in brackets is given in GygaBytes for a quantization block size of 32, and takes into account both the model weights and the quantization parameters stored in float16. With a fine enough granularity of quantization blocks, a 4 bits model stays within 2 points of MMLU of the floating ... [truncated]"
+    - Chunk 2410.00037v1_c00106 | Pages [65, 66] | 236 tokens | 1335 chars:
+      "MOSHI: (annoyed) You think that would work? USER: Well, it’s worth a shot. MOSHI: (annoyed) Oh, I’m sure it will be the highlight of my evening. USER: Okay, okay. No more jokes. How about we just find someone interesting to talk to? MOSHI: (annoyed) Fine, but I’m not promising anything. USER: ... [truncated]"
+
+  PAPER: Dynamic Chunking for End-to-End Hierarchical Sequence Modeling (2507.07955v2)
+  Chunks: 82 | Tokens [min: 113, mean: 501.7, max: 584]
+    - Chunk 2507.07955v2_c00001 | Pages [1] | 549 tokens | 2535 chars:
+      "Dynamic Chunking for End-to-End Hierarchical Sequence Modeling Sukjun Hwang Carnegie Mellon University sukjunh@cs.cmu.edu Brandon Wang Cartesia AI brandon.wang@cartesia.ai Albert Gu Carnegie Mellon University, Cartesia AI agu@cs.cmu.edu, albert@cartesia.ai Abstract Major progress on language models ... [truncated]"
+    - Chunk 2507.07955v2_c00042 | Pages [22] | 525 tokens | 2569 chars:
+      "4 Discussion Related Work. Table 6 summarizes related models, particularly those motivated by byte-level language modeling. These methods are described in detail in Appendix A, which provides an extended related work. Distillation. For new architectures, showing that they can be distilled from s ... [truncated]"
+    - Chunk 2507.07955v2_c00082 [Section: References] | Pages [39] | 166 tokens | 730 chars:
+      "Results. The results from our distillation procedure are shown in Table 8. H-Net is able to approximately match performance across almost all benchmarks; in general, H-Net is not able to replicate the behavior of the tokenized model exactly, so it is not unexpected that the benchmarks are slightly ... [truncated]"
+
+================================================================================
+
+STRATEGY: STRUCTURE_AWARE (Tokenizer: hf_local:sentence-transformers/all-MiniLM-L6-v2)
+Total Chunks Across 3 Papers: 221
+--------------------------------------------------------------------------------
+  PAPER: Attention Is All You Need (1706.03762v7)
+  Chunks: 23 | Tokens [min: 42, mean: 423.8, max: 585]
+    - Chunk 1706.03762v7_c00001 | Pages [1] | 585 tokens | 2740 chars:
+      "Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Pa ... [truncated]"
+    - Chunk 1706.03762v7_c00012 | Pages [7] | 191 tokens | 691 chars:
+      "For our big models,(described on the bottom line of table 3), step time was 1.0 seconds. The big models were trained for 300,000 steps (3.5 days). 5.3 Optimizer We used the Adam optimizer [20] with β1 = 0.9, β2 = 0.98 and ϵ = 10−9. We varied the learning rate over the course of training, accordin ... [truncated]"
+    - Chunk 1706.03762v7_c00023 | Pages [14, 15] | 374 tokens | 1559 chars:
+      "The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its applic ... [truncated]"
+
+  PAPER: Moshi: A Speech-Text Foundation Model for Real-Time Dialogue (2410.00037v1)
+  Chunks: 118 | Tokens [min: 63, mean: 416.1, max: 588]
+    - Chunk 2410.00037v1_c00001 | Pages [1] | 497 tokens | 2157 chars:
+      "Moshi: a speech-text foundation model for real-time dialogue Moshi: a speech-text foundation model for real-time dialogue Alexandre D´efossez∗ alex@kyutai.org Laurent Mazar´e∗ Manu Orsini Am´elie Royer Patrick P´erez Herv´e J´egou Edouard Grave∗ Neil Zeghidour∗ neil@kyutai.org Kyutai ∗Equal contribu ... [truncated]"
+    - Chunk 2410.00037v1_c00060 | Pages [33] | 304 tokens | 990 chars:
+      "Moshi: a speech-text foundation model for real-time dialogue Table 10: Linguistic impact of model compression on Helium, as measured by MMLU. ‘WXA8’ indicates a model with weights quantized to ‘X’ bits and activations to 8 bits, using integer scalar PTQ. The model size in brackets is given in GygaB ... [truncated]"
+    - Chunk 2410.00037v1_c00118 | Pages [66] | 150 tokens | 1023 chars:
+      "Moshi: a speech-text foundation model for real-time dialogue Table 19: Speaking styles used to fine-tune Moshi. agreeing amazed amused angry annoyed anxious appreciative calm calmly cautious concerned confident confused curious defeated defensive defiant determined disappointed disgusted doubtful ec ... [truncated]"
+
+  PAPER: Dynamic Chunking for End-to-End Hierarchical Sequence Modeling (2507.07955v2)
+  Chunks: 80 | Tokens [min: 72, mean: 466.3, max: 588]
+    - Chunk 2507.07955v2_c00001 | Pages [1] | 549 tokens | 2535 chars:
+      "Dynamic Chunking for End-to-End Hierarchical Sequence Modeling Sukjun Hwang Carnegie Mellon University sukjunh@cs.cmu.edu Brandon Wang Cartesia AI brandon.wang@cartesia.ai Albert Gu Carnegie Mellon University, Cartesia AI agu@cs.cmu.edu, albert@cartesia.ai Abstract Major progress on language models ... [truncated]"
+    - Chunk 2507.07955v2_c00041 | Pages [20] | 573 tokens | 2115 chars:
+      "50B 100B 150B 200B 250B 300B Total Training Bytes 0.74 0.76 0.78 0.80 0.82 0.84 0.86 Bits-per-byte H-Net (2-stage, hybrid) H-Net (2-stage, T27) Figure 11: Hybrid main network. Bits-per-byte during the stable phase of training, for H-Net (2-stage) with Trans- former main stage and with hybrid main s ... [truncated]"
+    - Chunk 2507.07955v2_c00080 [Section: References] | Pages [39] | 564 tokens | 2505 chars:
+      "(2025) coined the term “tokenization bias" to represent the fact that the tokenization process implicitly contains next-byte information. For example, the Llama 3 tokenizer tokenizes the strings _distill and _distinct into [_dist, ill] and [_distinct]. Prior use of this term has been to suggest th ... [truncated]"
+
+================================================================================
+
+STRATEGY: SENTENCE_AWARE (Tokenizer: hf_local:sentence-transformers/all-MiniLM-L6-v2)
+Total Chunks Across 3 Papers: 187
+--------------------------------------------------------------------------------
+  PAPER: Attention Is All You Need (1706.03762v7)
+  Chunks: 19 | Tokens [min: 317, mean: 513.1, max: 539]
+    - Chunk 1706.03762v7_c00001 | Pages [1] | 534 tokens | 2444 chars:
+      "Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. Attention Is All You Need Ashish Vaswani∗ Google Brain avaswani@google.com Noam Shazeer∗ Google Brain noam@google.com Niki Par ... [truncated]"
+    - Chunk 1706.03762v7_c00010 | Pages [7, 8] | 523 tokens | 1640 chars:
+      "We varied the learning rate over the course of training, according to the formula: lrate = d−0.5 model · min(step_num−0.5, step_num · warmup_steps−1.5) (3) This corresponds to increasing the learning rate linearly for the first warmup_steps training steps, and decreasing it thereafter proportionally ... [truncated]"
+    - Chunk 1706.03762v7_c00019 | Pages [14, 15] | 317 tokens | 1316 chars:
+      "<EOS> <pad> The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> The Law will never be perfect , but its application should be just - this is what we are missing , in my opinion . <EOS> <pad> Figure 4: Two attention heads, als ... [truncated]"
+
+  PAPER: Moshi: A Speech-Text Foundation Model for Real-Time Dialogue (2410.00037v1)
+  Chunks: 95 | Tokens [min: 150, mean: 516.9, max: 583]
+    - Chunk 2410.00037v1_c00001 | Pages [1, 2] | 573 tokens | 2515 chars:
+      "Moshi: a speech-text foundation model for real-time dialogue Moshi: a speech-text foundation model for real-time dialogue Alexandre D´efossez∗ alex@kyutai.org Laurent Mazar´e∗ Manu Orsini Am´elie Royer Patrick P´erez Herv´e J´egou Edouard Grave∗ Neil Zeghidour∗ neil@kyutai.org Kyutai ∗Equal contribu ... [truncated]"
+    - Chunk 2410.00037v1_c00048 | Pages [32, 33] | 553 tokens | 2337 chars:
+      "Results - Linguistic evaluation. To assess how quantization impacts the reasoning abil- ity of the model, we evaluate the quantized models’ performance on the MMLU benchmark for the base Helium model trained on text-only data used as foundation for Moshi (Table 10), as well as for Moshi itself (Tabl ... [truncated]"
+    - Chunk 2410.00037v1_c00095 | Pages [66] | 150 tokens | 1023 chars:
+      "Moshi: a speech-text foundation model for real-time dialogue Table 19: Speaking styles used to fine-tune Moshi. agreeing amazed amused angry annoyed anxious appreciative calm calmly cautious concerned confident confused curious defeated defensive defiant determined disappointed disgusted doubtful ec ... [truncated]"
+
+  PAPER: Dynamic Chunking for End-to-End Hierarchical Sequence Modeling (2507.07955v2)
+  Chunks: 73 | Tokens [min: 102, mean: 511.0, max: 572]
+    - Chunk 2507.07955v2_c00001 | Pages [1] | 549 tokens | 2526 chars:
+      "Dynamic Chunking for End-to-End Hierarchical Sequence Modeling Sukjun Hwang Carnegie Mellon University sukjunh@cs.cmu.edu Brandon Wang Cartesia AI brandon.wang@cartesia.ai Albert Gu Carnegie Mellon University, Cartesia AI agu@cs.cmu.edu, albert@cartesia.ai Abstract Major progress on language models ... [truncated]"
+    - Chunk 2507.07955v2_c00037 | Pages [20] | 558 tokens | 2095 chars:
+      "40B 60B 80B 100B 120B 140B Total Training Bytes 0.80 0.85 0.90 0.95 1.00 1.05 Bits-per-byte LlamaByte (200M) LlamaByte MoE (860M) H-Net (1-stage, 680M) H-Net (2-stage, 870M) Figure 12: Comparison to Mixtures-of-Experts. Bits- per-byte comparison of H-Net (both 1-stage and 2-stage) to LlamaByte-MoE, ... [truncated]"
+    - Chunk 2507.07955v2_c00073 [Section: References] | Pages [39] | 102 tokens | 420 chars:
+      "Byte-Latent Transformer (Pagnoni et al. 2024, Table 5) performs a similar experiment, and they see a greater gap among most benchmarks (particularly PiQA, Arc-Easy, and Arc-Challenge) despite using a much larger amount of data (220B tokens versus 189B bytes); it is possible that this performance dif ... [truncated]"
+
+================================================================================

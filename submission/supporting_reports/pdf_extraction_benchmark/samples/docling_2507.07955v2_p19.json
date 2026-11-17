@@ -1,0 +1,9 @@
+{
+  "paper_id": "2507.07955v2",
+  "page_num": 19,
+  "execution_time_ms": 3143.51,
+  "table_count": 0,
+  "heading_count": 0,
+  "char_count": 3579,
+  "markdown_excerpt": "Figure 9: SpaceByte++ encoder-decoder architecture ablation using raw byte inputs. We evaluate four encoderdecoder (E 0 - D 0 ) configurations: M4-M4 , M2T1-T1M2 and T1M2-M2T1, and T2-T2, where M denotes Mamba layers and T denotes Transformer layers.\n\n<!-- image -->\n\nFigure 10: Encoder-decoder architecture ablation using BPE-tokenized inputs. Assuming that GPT-2 tokenizer serves as the outermost encoder-decoder (i.e., E 0 -D 0 ), we evaluate six E 1 -D 1 combinations: M6-M6, M4T1-T1M4, T1M4-M4T1, M2T2-T2M2, T2M2-M2T2, and T3-T3.\n\n<!-- image -->\n\nlayer and T denotes a Transformer layer. These combinations are chosen by keeping the symmetry and replacing each Transformer layer with two Mamba-2 layers, as they contain equivalent parameter counts - 12𝐷 2 for Transformer (4𝐷 2 for the attention mechanism and 8𝐷 2 for an MLP) vs. ≈ 6𝐷 2 per Mamba-2 layer (no MLP).\n\nFigure 8 and Figure 9 demonstrate that Mamba layers are essential for effective byte-level sequence processing. For both H-Net a"
+}

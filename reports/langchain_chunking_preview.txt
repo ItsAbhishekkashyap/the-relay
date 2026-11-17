@@ -1,0 +1,191 @@
+================================================================================
+THE RELAY: LangChain Recursive Chunking Preview
+Generated: 2026-11-12 11:25:44 UTC
+Configuration: chunk_size=512, chunk_overlap=76
+================================================================================
+
+### PAPER: 1706.03762v7 — Attention Is All You Need
+Source: 1706.03762v7.pdf
+Docs: 46 | Chunks: 49 | Pages: 15
+Token Stats: Min=2, Max=669, Mean=224.22, Median=182
+Elements: {'prose': 40, 'table_unstructured': 5, 'table': 4}
+------------------------------------------------------------
+Chunk ID: 1706.03762v7_lc_0000 (Index: 0)
+Page(s): [1] | Section: None | Type: prose
+Tokens: 157 | Characters: 602
+Content:
+Provided proper attribution is provided, Google hereby grants permission to
+reproduce the tables and figures in this paper solely for use in journalistic or
+
+scholarly works.
+
+Attention Is All You Need
+
+Ashish Vaswani∗
+
+Google Brain
+avaswani@google.com
+
+Noam Shazeer∗
+
+Google Brain
+noam@google.com
+
+Niki Parmar∗
+Google Research
+nikip@google.com
+
+Jako...
+........................................
+Chunk ID: 1706.03762v7_lc_0001 (Index: 1)
+Page(s): [1] | Section: Abstract | Type: prose
+Tokens: 470 | Characters: 2272
+Content:
+Abstract
+
+The dominant sequence transduction models are based on complex recurrent or
+convolutional neural networks that include an encoder and a decoder. The best
+performing models also connect the encoder and decoder through an attention
+mechanism. We propose a new simple network architecture, the Transformer,
+based solely on attention mechanisms...
+........................................
+Chunk ID: 1706.03762v7_lc_0002 (Index: 2)
+Page(s): [2] | Section: 1 Introduction | Type: prose
+Tokens: 364 | Characters: 1924
+Content:
+1
+Introduction
+
+Recurrent neural networks, long short-term memory [13] and gated recurrent [7] neural networks
+in particular, have been firmly established as state of the art approaches in sequence modeling and
+transduction problems such as language modeling and machine translation [35, 2, 5]. Numerous
+efforts have since continued to push the bound...
+........................................
+Chunk ID: 1706.03762v7_lc_0015 (Index: 15)
+Page(s): [6] | Section: 4 Why Self-Attention | Type: table_unstructured
+Tokens: 57 | Characters: 285
+Content:
+Table 1: Maximum path lengths, per-layer complexity and minimum number of sequential operations
+for different layer types. n is the sequence length, d is the representation dimension, k is the kernel
+size of convolutions and r the size of the neighborhood in restricted self-attention.
+........................................
+
+
+### PAPER: 2410.00037v1 — Moshi: A Speech-Text Foundation Model for Real-Time Dialogue
+Source: 2410.00037v1.pdf
+Docs: 141 | Chunks: 218 | Pages: 66
+Token Stats: Min=1, Max=738, Mean=306.02, Median=339.5
+Elements: {'prose': 147, 'table_unstructured': 19, 'table': 52}
+------------------------------------------------------------
+Chunk ID: 2410.00037v1_lc_0000 (Index: 0)
+Page(s): [1] | Section: None | Type: prose
+Tokens: 81 | Characters: 246
+Content:
+Moshi: a speech-text foundation model for real-time dialogue
+
+Alexandre D´efossez∗
+alex@kyutai.org
+Laurent Mazar´e∗
+
+Manu Orsini
+Am´elie Royer
+Patrick P´erez
+Herv´e J´egou
+Edouard Grave∗
+
+Neil Zeghidour∗
+neil@kyutai.org
+Kyutai
+∗Equal contribution
+........................................
+Chunk ID: 2410.00037v1_lc_0001 (Index: 1)
+Page(s): [1] | Section: Abstract | Type: prose
+Tokens: 402 | Characters: 1855
+Content:
+Abstract
+
+We introduce Moshi, a speech-text foundation model and full-duplex spoken dialogue frame-
+work. Current systems for spoken dialogue rely on pipelines of independent components,
+namely voice activity detection, speech recognition, textual dialogue and text-to-speech.
+Such frameworks cannot emulate the experience of real conversations. Firs...
+........................................
+Chunk ID: 2410.00037v1_lc_0002 (Index: 2)
+Page(s): [2] | Section: 1 Introduction | Type: prose
+Tokens: 491 | Characters: 2199
+Content:
+1 Introduction
+
+Voice has provided a convenient interface to early conversational systems, from Alexa1 to
+Siri2 and Google Assistant.3 In this context, a “wake word” spoken by the user typically
+triggers an automatic speech recognition (ASR) system which transcribes the subsequent
+user’s request. Then, a natural language understanding (NLU) pipelin...
+........................................
+Chunk ID: 2410.00037v1_lc_0020 (Index: 20)
+Page(s): [8] | Section: 3.2.2 Pre-training data filtering | Type: table_unstructured
+Tokens: 161 | Characters: 709
+Content:
+Table 1: Models’ hyperparameters. Hyperparameters for the architecture and training
+of our 7B-parameter Helium language model and of Moshi, our speech-text dialogue model.
+The training of Moshi goes through 4 phases: Pre-training on unsupervised data (with
+Temporal Transformer initialized from Helium); Post-training with simulated multi-stream
+base...
+........................................
+
+
+### PAPER: 2507.07955v2 — Dynamic Chunking for End-to-End Hierarchical Sequence Modeling
+Source: 2507.07955v2.pdf
+Docs: 78 | Chunks: 135 | Pages: 39
+Token Stats: Min=5, Max=511, Mean=331.67, Median=397
+Elements: {'prose': 105, 'table_unstructured': 8, 'table': 22}
+------------------------------------------------------------
+Chunk ID: 2507.07955v2_lc_0000 (Index: 0)
+Page(s): [1] | Section: None | Type: prose
+Tokens: 75 | Characters: 261
+Content:
+Dynamic Chunking for End-to-End Hierarchical Sequence Modeling
+
+Sukjun Hwang
+Carnegie Mellon University
+
+sukjunh@cs.cmu.edu
+
+Brandon Wang
+
+Cartesia AI
+brandon.wang@cartesia.ai
+
+Albert Gu
+Carnegie Mellon University, Cartesia AI
+agu@cs.cmu.edu, albert@cartesia.ai
+........................................
+Chunk ID: 2507.07955v2_lc_0001 (Index: 1)
+Page(s): [1] | Section: Abstract | Type: prose
+Tokens: 347 | Characters: 1750
+Content:
+Abstract
+
+Major progress on language models (LMs) in recent years has largely resulted from moving away from specialized models
+designed for specific tasks, to general models based on powerful architectures (e.g. the Transformer) that learn everything
+from raw data. Despite this trend, pre-processing steps such as tokenization remain a barrier to t...
+........................................
+Chunk ID: 2507.07955v2_lc_0002 (Index: 2)
+Page(s): [1] | Section: 1 Introduction | Type: prose
+Tokens: 452 | Characters: 1866
+Content:
+1
+Introduction
+
+A broad goal of deep learning is to learn meaningful patterns from raw data, automatically extracting features and building
+abstractions in an end-to-end fashion. However, fixed-vocabulary tokenization, the process of compressing raw text
+into predefined chunks through algorithms such as byte-pair encoding (BPE) (Sennrich, Haddow, a...
+........................................
+Chunk ID: 2507.07955v2_lc_0029 (Index: 29)
+Page(s): [11] | Section: 3 Experiments | Type: table_unstructured
+Tokens: 179 | Characters: 676
+Content:
+Table 1: Architectures for main language models, all data-/FLOP-matched. E0, D0 , E1, D1 , M . T and M denote
+a Transformer and a Mamba-2 layer, respectively. For hierarchical byte-level models, the Tokenizer column lists the
+chunking mechanism. The numbers before DC indicate downsampling factor 𝑁in equation (10); for example, (3,3)-DC
+denotes 𝑁0 =...
+........................................
+

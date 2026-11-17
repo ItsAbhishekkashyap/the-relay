@@ -1,0 +1,9 @@
+{
+  "paper_id": "2507.07955v2",
+  "page_num": 39,
+  "execution_time_ms": 2918.73,
+  "table_count": 0,
+  "heading_count": 0,
+  "char_count": 2950,
+  "markdown_excerpt": "Figure 16: Visualization of boundary positions dynamically drawn by H-Net (1-stage). The given text is perturbed that some whitespaces are missing. H-Net detects word boundaries even if they are not explicitly separated by whitespaces.\n\n<!-- image -->\n\ntoo much can harm the language-modeling loss.\n\nTokenization bias. We are not able to send all auxiliary losses to zero because online prediction of BPE boundaries is an impossible task. Phan et al. (2025) coined the term \"tokenization bias\" to represent the fact that the tokenization process implicitly contains next-byte information. For example, the Llama 3 tokenizer tokenizes the strings \\_distill and \\_distinct into [\\_dist, ill] and [\\_distinct]. Prior use of this term has been to suggest that if an autoregressive language model is prompted with \\_dist, the nature of its training will be that it will never complete with inct (this is in fact a flaw of all tokenization-based models).\n\nFor us, however, tokenization bias implies that we"
+}

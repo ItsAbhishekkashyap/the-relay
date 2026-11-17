@@ -1,0 +1,274 @@
+{
+  "execution_time_ms": 62.57,
+  "char_count": 3794,
+  "total_blocks": 25,
+  "text_block_count": 25,
+  "image_block_count": 0,
+  "span_count": 375,
+  "unique_fonts": [
+    "LibertineMathMI",
+    "LibertineMathMI5",
+    "LibertineMathMI7",
+    "LinBiolinumT",
+    "LinLibertineT",
+    "LinLibertineTB",
+    "LinLibertineTI",
+    "dsrom10",
+    "txexs",
+    "txmiaX",
+    "txsys"
+  ],
+  "raw_text_excerpt": "• First, we ensure the model width (often referred to as 𝑑model for isotropic architectures) is monotone in the hierarchy:\n𝐷0 ≤𝐷1 ≤· · · ≤𝐷𝑆. This allows increasing compute and parameters used in the main network without significantly\nincreasing its depth.\n• Second, using efficient and powerful SSM layers in the outer networks allow reducing the number of layers used\ncompared to similar prior architectures that only used Transformer layers (Slagle 2024); in this paper, we always\nstick to four la",
+  "structured_blocks": [
+    {
+      "block_no": 0,
+      "bbox": [
+        88.43,
+        72.9,
+        562.77,
+        106.78
+      ],
+      "text": "• First, we ensure the model width (often referred to as 𝑑model for isotropic architectures) is monotone in the hierarchy:\n𝐷0 ≤𝐷1 ≤· · · ≤𝐷𝑆. This allows increasing compute and parameters used in the main network without significantly\nincreasing its depth."
+    },
+    {
+      "block_no": 1,
+      "bbox": [
+        88.43,
+        114.66,
+        561.6,
+        148.62
+      ],
+      "text": "• Second, using efficient and powerful SSM layers in the outer networks allow reducing the number of layers used\ncompared to similar prior architectures that only used Transformer layers (Slagle 2024); in this paper, we always\nstick to four layers (or the equivalent of four Mamba layers) in each encoder/decoder network."
+    },
+    {
+      "block_no": 2,
+      "bbox": [
+        71.7,
+        156.65,
+        561.79,
+        192.92
+      ],
+      "text": "To handle the changes in dimensions without an additional linear layer, we adopt the technique used in SpaceByte (Slagle\n2024) with the marginal change: to expand dimensions (i.e., 𝐷𝑠→𝐷𝑠+1), we append all vectors with a shared trainable vector\nof dimension 𝐷𝑠+1 −𝐷𝑠; to reduce dimensions (i.e., 𝐷𝑠+1 →𝐷𝑠), we take the first 𝐷𝑠dimensions from each vector."
+    },
+    {
+      "block_no": 3,
+      "bbox": [
+        71.52,
+        198.4,
+        563.29,
+        220.35
+      ],
+      "text": "We note that H-Net’s performance can likely be improved with more careful tuning of the layer allocation and hyperpa-\nrameters between sub-networks."
+    },
+    {
+      "block_no": 4,
+      "bbox": [
+        72.0,
+        239.11,
+        234.11,
+        251.07
+      ],
+      "text": "2.2\nDynamic Chunking (DC)"
+    },
+    {
+      "block_no": 5,
+      "bbox": [
+        72.0,
+        256.5,
+        561.86,
+        290.47
+      ],
+      "text": "H-Net learns chunking boundaries through end-to-end training, allowing it to identify semantically meaningful units\nadaptively. Furthermore, this dynamic approach enables the model to allocate computational resources efficiently by\ncompressing low-information regions while preserving high-information content at appropriate granularity."
+    },
+    {
+      "block_no": 6,
+      "bbox": [
+        72.0,
+        308.74,
+        176.02,
+        318.7
+      ],
+      "text": "2.2.1\nChunking Layer"
+    },
+    {
+      "block_no": 7,
+      "bbox": [
+        71.7,
+        324.62,
+        563.28,
+        347.86
+      ],
+      "text": "The chunking layer (Chunk in equation (2)) contains a routing module and downsampler, as illustrated in Figure 1-\n( bottom-right )."
+    },
+    {
+      "block_no": 8,
+      "bbox": [
+        72.0,
+        365.33,
+        561.6,
+        424.65
+      ],
+      "text": "Routing Module.\nIn natural data, meaningful boundaries tend to emerge at points of contextual or semantic shift. From\nthis observation, we add an inductive bias by measuring the similarity between adjacent representations: when context\nchanges, consecutive vectors should exhibit lower similarity. The routing module implements this intuition through\ncosine similarity between adjacent encoder outputs. Given encoder outputs ˆ𝑋, it calculates boundary probabilities 𝑝𝑡and\nboundary indicators 𝑏𝑡as follows:"
+    },
+    {
+      "block_no": 9,
+      "bbox": [
+        154.47,
+        439.98,
+        298.56,
+        458.68
+      ],
+      "text": "𝑞𝑡= 𝑊𝑞ˆ𝑥𝑡,\n𝑘𝑡= 𝑊𝑘ˆ𝑥𝑡,\n𝑝𝑡= 1"
+    },
+    {
+      "block_no": 10,
+      "bbox": [
+        293.93,
+        453.56,
+        298.56,
+        463.52
+      ],
+      "text": "2"
+    },
+    {
+      "block_no": 11,
+      "bbox": [
+        302.21,
+        441.74,
+        305.89,
+        451.71
+      ],
+      "text": "\u0012"
+    },
+    {
+      "block_no": 12,
+      "bbox": [
+        306.09,
+        439.71,
+        342.4,
+        458.4
+      ],
+      "text": "1 −\n𝑞⊤"
+    },
+    {
+      "block_no": 13,
+      "bbox": [
+        323.18,
+        439.71,
+        369.01,
+        466.26
+      ],
+      "text": "𝑡𝑘𝑡−1\n∥𝑞𝑡∥∥𝑘𝑡−1∥"
+    },
+    {
+      "block_no": 14,
+      "bbox": [
+        370.9,
+        441.74,
+        374.58,
+        451.71
+      ],
+      "text": "\u0013"
+    },
+    {
+      "block_no": 15,
+      "bbox": [
+        378.34,
+        446.68,
+        562.2,
+        459.56
+      ],
+      "text": "∈[0, 1],\n𝑏𝑡= 1{𝑝𝑡≥0.5},\n(4)"
+    },
+    {
+      "block_no": 16,
+      "bbox": [
+        71.63,
+        470.12,
+        561.6,
+        517.49
+      ],
+      "text": "where 𝑝1 = 1.0 by definition, ensuring the sequence begins with a boundary. This formulation scales cosine similarity into\na boundary score or probability: ideally, when consecutive vectors ˆ𝑥𝑡−1 and ˆ𝑥𝑡span a semantic boundary (e.g., between\nmorphemes, words, or phrases), their projections 𝑞𝑡and 𝑘𝑡−1 diverge in the latent space, yielding low cosine similarity and\nconsequently high boundary probability 𝑝𝑡."
+    },
+    {
+      "block_no": 17,
+      "bbox": [
+        72.0,
+        528.03,
+        561.86,
+        555.38
+      ],
+      "text": "Downsampler.\nThe downsampler compresses encoder outputs ˆ𝑥𝑠into a reduced set of vectors 𝑥𝑠+1 using boundary\nindicators {𝑏𝑠"
+    },
+    {
+      "block_no": 18,
+      "bbox": [
+        122.8,
+        542.02,
+        137.92,
+        556.5
+      ],
+      "text": "𝑡}𝐿𝑠"
+    },
+    {
+      "block_no": 19,
+      "bbox": [
+        72.0,
+        543.8,
+        561.6,
+        565.62
+      ],
+      "text": "𝑡=1. Among potential compression strategies – including mean pooling, max pooling, or cross-attention – we\nadopt direct selection of boundary-marked vectors for its simplicity and effectiveness (see Appendix E.1 for ablations)."
+    },
+    {
+      "block_no": 20,
+      "bbox": [
+        71.65,
+        573.49,
+        561.6,
+        607.66
+      ],
+      "text": "As illustrated in Figure 1-(b), this approach follows a straightforward selection rule: vectors where 𝑏𝑡= 1 are retained\nin the compressed sequence 𝑥𝑠+1, while those where 𝑏𝑡= 0 are discarded. Likewise, the same downsampler applies to\nboundary probabilities, compressing 𝑝𝑠into 𝑃𝑠+1 for use in a dechunking layer (see Section 2.2.2)."
+    },
+    {
+      "block_no": 21,
+      "bbox": [
+        72.0,
+        625.74,
+        157.89,
+        635.7
+      ],
+      "text": "2.2.2\nDechunking"
+    },
+    {
+      "block_no": 22,
+      "bbox": [
+        71.7,
+        641.71,
+        563.28,
+        664.86
+      ],
+      "text": "The dechunking layer (Dechunk in equation (3)) consists of a smoothing module and upsampler, as illustrated in Figure 1-\n( top-right )."
+    },
+    {
+      "block_no": 23,
+      "bbox": [
+        72.0,
+        682.27,
+        561.86,
+        716.1
+      ],
+      "text": "Smoothing Module.\nThe critical challenge in training a dynamic chunking module lies in the discrete nature of chunk\nboundaries, which impedes gradient flow during backpropagation. We introduce the smoothing module as a technique\nto address this problem. As illustrated in Figure 1-(c), this component transforms discrete chunking operations into"
+    },
+    {
+      "block_no": 24,
+      "bbox": [
+        314.48,
+        740.83,
+        319.12,
+        750.79
+      ],
+      "text": "6"
+    }
+  ]
+}

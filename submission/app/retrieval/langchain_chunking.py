@@ -1,0 +1,186 @@
+"""
+LangChain-based Token-Aware Chunking Engine for The Relay.
+
+Uses LangChain's RecursiveCharacterTextSplitter configured with the local
+Sentence Transformers 'all-MiniLM-L6-v2' tokenizer to produce deterministic,
+citation-preserving chunks with exact token counts and provenance metadata.
+"""
+
+from __future__ import annotations
+
+import logging
+from typing import Any, Callable, Dict, List, Optional
+
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from transformers import AutoTokenizer, logging as hf_logging
+
+# Suppress token length warnings during chunk measurement
+hf_logging.set_verbosity_error()
+
+logger = logging.getLogger(__name__)
+
+DEFAULT_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+DEFAULT_CHUNK_SIZE = 512
+DEFAULT_CHUNK_OVERLAP = 76
+DEFAULT_SEPARATORS = ["\n\n", "\n", " ", ""]
+
+# Cache tokenizer instance to avoid redundant initialization
+_CACHED_TOKENIZER = None
+
+
+def get_local_tokenizer(model_name: str = DEFAULT_MODEL_NAME) -> Any:
+    """
+    Load the Sentence Transformers tokenizer strictly from local cache.
+
+    Raises RuntimeError if the tokenizer is not available locally.
+    Per project specification, does NOT silently fall back to character counting.
+    """
+    global _CACHED_TOKENIZER
+    if model_name == DEFAULT_MODEL_NAME and _CACHED_TOKENIZER is not None:
+        return _CACHED_TOKENIZER
+
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
+        if model_name == DEFAULT_MODEL_NAME:
+            _CACHED_TOKENIZER = tokenizer
+        return tokenizer
+    except Exception as exc:
+        raise RuntimeError(
+            f"Tokenizer for '{model_name}' could not be loaded locally: {exc}. "
+            "Per project rules, stopping execution rather than silently switching to character-based counting."
+        ) from exc
+
+
+def count_tokens(text: str, tokenizer: Any = None) -> int:
+    """Count actual BPE/WordPiece tokens using the local MiniLM tokenizer."""
+    if not text:
+        return 0
+    tok = tokenizer or get_local_tokenizer()
+    return len(tok.encode(text, add_special_tokens=False))
+
+
+def create_langchain_splitter(
+    chunk_size: int = DEFAULT_CHUNK_SIZE,
+    chunk_overlap: int = DEFAULT_CHUNK_OVERLAP,
+    tokenizer: Any = None,
+    separators: Optional[List[str]] = None,
+) -> RecursiveCharacterTextSplitter:
+    """
+    Construct a LangChain RecursiveCharacterTextSplitter calibrated for token counts.
+
+    Args:
+        chunk_size: Maximum token capacity per chunk (default 512).
+        chunk_overlap: Token overlap between consecutive chunks (default 76).
+        tokenizer: Pre-loaded HuggingFace/SentenceTransformers tokenizer.
+        separators: Boundary hierarchy list (default: ['\n\n', '\n', ' ', '']).
+    """
+    tok = tokenizer or get_local_tokenizer()
+    seps = separators or DEFAULT_SEPARATORS
+
+    return RecursiveCharacterTextSplitter.from_huggingface_tokenizer(
+        tokenizer=tok,
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
+        separators=seps,
+        keep_separator=True,
+    )
+
+
+def chunk_langchain_documents(
+    documents: List[Document],
+    splitter: Optional[RecursiveCharacterTextSplitter] = None,
+    tokenizer: Any = None,
+    chunk_size: int = DEFAULT_CHUNK_SIZE,
+    chunk_overlap: int = DEFAULT_CHUNK_OVERLAP,
+) -> List[Document]:
+    """
+    Split LangChain Documents into token-aware chunks while preserving provenance.
+
+    Args:
+        documents: Ingested LangChain Document objects.
+        splitter: Optional pre-configured RecursiveCharacterTextSplitter.
+        tokenizer: Optional pre-loaded MiniLM tokenizer.
+        chunk_size: Token size limit.
+        chunk_overlap: Token overlap length.
+
+    Returns:
+        List of chunked LangChain Document objects with complete metadata.
+    """
+    tok = tokenizer or get_local_tokenizer()
+    sp = splitter or create_langchain_splitter(
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
+        tokenizer=tok,
+    )
+
+    # Split documents using LangChain RecursiveCharacterTextSplitter
+    # Preserve table documents atomically if within reasonable capacity (up to 768 tokens)
+    # to maintain complete caption, context, and structural table row alignment.
+    raw_chunks: List[Document] = []
+    for doc in documents:
+        elem_type = doc.metadata.get("element_type", "prose")
+        doc_tokens = count_tokens(doc.page_content, tok)
+        if elem_type in ("table", "table_unstructured") and doc_tokens <= 768:
+            raw_chunks.append(doc)
+        else:
+            raw_chunks.extend(sp.split_documents([doc]))
+
+    # Post-process chunks to assign deterministic IDs and exact metadata
+    processed_chunks: List[Document] = []
+    paper_chunk_counters: Dict[str, int] = {}
+
+    for rc in raw_chunks:
+        text = rc.page_content.strip()
+        if not text:
+            # Skip empty chunks if generated by boundary splits
+            continue
+
+        paper_id = rc.metadata.get("paper_id", "unknown_paper")
+        idx = paper_chunk_counters.get(paper_id, 0)
+        paper_chunk_counters[paper_id] = idx + 1
+
+        deterministic_chunk_id = f"{paper_id}_lc_{idx:04d}"
+        tokens = count_tokens(text, tok)
+
+        chunk_meta = dict(rc.metadata)
+        chunk_meta.update({
+            "chunk_id": deterministic_chunk_id,
+            "chunk_index": idx,
+            "token_count": tokens,
+            "character_count": len(text),
+            "chunking_strategy": "langchain_recursive",
+            "chunk_size": chunk_size,
+            "chunk_overlap": chunk_overlap,
+        })
+
+        processed_chunks.append(Document(page_content=text, metadata=chunk_meta))
+
+    return processed_chunks
+
+
+def chunk_to_dict(chunk: Document) -> Dict[str, Any]:
+    """Convert a LangChain chunk Document into a clean, JSON-serializable dictionary."""
+    meta = chunk.metadata
+    return {
+        "chunk_id": meta["chunk_id"],
+        "chunk_index": meta["chunk_index"],
+        "paper_id": meta.get("paper_id"),
+        "arxiv_id": meta.get("arxiv_id"),
+        "paper_version": meta.get("paper_version"),
+        "paper_title": meta.get("paper_title"),
+        "source_filename": meta.get("source_filename"),
+        "page_number": meta.get("page_number"),
+        "page_numbers": meta.get("page_numbers", [meta.get("page_number")]),
+        "section": meta.get("section"),
+        "element_type": meta.get("element_type", "prose"),
+        "source_block_id": meta.get("source_block_id"),
+        "source_block_ids": meta.get("source_block_ids", []),
+        "bbox": meta.get("bbox"),
+        "chunk_text": chunk.page_content,
+        "token_count": meta.get("token_count", 0),
+        "character_count": meta.get("character_count", len(chunk.page_content)),
+        "chunking_strategy": meta.get("chunking_strategy", "langchain_recursive"),
+        "chunk_size": meta.get("chunk_size", DEFAULT_CHUNK_SIZE),
+        "chunk_overlap": meta.get("chunk_overlap", DEFAULT_CHUNK_OVERLAP),
+    }

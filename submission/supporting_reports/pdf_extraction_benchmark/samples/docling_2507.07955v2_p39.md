@@ -1,0 +1,15 @@
+Figure 16: Visualization of boundary positions dynamically drawn by H-Net (1-stage). The given text is perturbed that some whitespaces are missing. H-Net detects word boundaries even if they are not explicitly separated by whitespaces.
+
+<!-- image -->
+
+too much can harm the language-modeling loss.
+
+Tokenization bias. We are not able to send all auxiliary losses to zero because online prediction of BPE boundaries is an impossible task. Phan et al. (2025) coined the term "tokenization bias" to represent the fact that the tokenization process implicitly contains next-byte information. For example, the Llama 3 tokenizer tokenizes the strings \_distill and \_distinct into [\_dist, ill] and [\_distinct]. Prior use of this term has been to suggest that if an autoregressive language model is prompted with \_dist, the nature of its training will be that it will never complete with inct (this is in fact a flaw of all tokenization-based models).
+
+For us, however, tokenization bias implies that we cannot determine whether or not the i in \_disti is the start of a new word until after seeing the next character. In fact, the problem can be even worse-consider \_applicable (becomes [\_app, licable]) and \_applicant (becomes [\_applicant]): Determining whether l is the start of a token requires knowing the next two bytes as well.
+
+While the H-Net does use the main network, it is not able to exactly match the behavior of the original tokenized model. Instead, it is finding slightly different representations of tokens to use in the main stage. Recent work has shown that tokenized language models can process tokenization sequences distinct from the "canonical" greedy tokenization (Vieira et al. 2024), so it is possible our H-Net found another alternate representation that the pretrained model could process.
+
+Remark. One might ask if our distilled model has simply learned to tokenize on spaces (since spaces are always the start of a new token). It has not. Simply tokenizing on spaces would yield a sub-95% boundary prediction accuracy; however, our distilled model gets boundary prediction accuracy above 99.5%. This suggests that the resulting H-Net is able to recognize some, but not all, subword boundaries.
+
+Results. The results from our distillation procedure are shown in Table 8. H-Net is able to approximately match performance across almost all benchmarks; in general, H-Net is not able to replicate the behavior of the tokenized model exactly, so it is not unexpected that the benchmarks are slightly worse. Byte-Latent Transformer (Pagnoni et al. 2024, Table 5) performs a similar experiment, and they see a greater gap among most benchmarks (particularly PiQA, Arc-Easy, and Arc-Challenge) despite using a much larger amount of data (220B tokens versus 189B bytes); it is possible that this performance difference is due to the fact that a BLT module cannot be supervised to align boundaries the way that end-to-end DC can.

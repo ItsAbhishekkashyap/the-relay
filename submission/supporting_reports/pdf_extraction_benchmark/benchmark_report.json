@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "timestamp": "2026-11-11T12:43:35Z",
+    "python_version": "3.12.0",
+    "docling_version": "2.150.0",
+    "pymupdf_version": "2.1",
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu_count": 12,
+    "system_ram_gb": 7.68,
+    "free_ram_gb": 0.8,
+    "total_benchmark_pages": 9
+  },
+  "pages": [
+    {
+      "paper_id": "1706.03762v7",
+      "paper_title": "Attention Is All You Need",
+      "page_num": 3,
+      "category": "Math & Multi-column",
+      "description": "Section 3.2 Attention equations (Scaled Dot-Product & Multi-Head), Fig 2 ref, two-column layout.",
+      "pymupdf": {
+        "time_ms": 258.95,
+        "char_count": 1827,
+        "block_count": 8,
+        "text_blocks": 8,
+        "spans": 157
+      },
+      "docling": {
+        "time_ms": 27468.83,
+        "time_sec": 27.47,
+        "memory_delta_mb": 332.97,
+        "char_count": 1850,
+        "table_count": 0,
+        "heading_count": 2,
+        "picture_count": 1
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 106.1,
+        "char_difference": 23
+      }
+    },
+    {
+      "paper_id": "1706.03762v7",
+      "paper_title": "Attention Is All You Need",
+      "page_num": 9,
+      "category": "Complex Multi-column Table",
+      "description": "Table 3 Variations on Transformer Architecture (8 columns, ablation rows A-E).",
+      "pymupdf": {
+        "time_ms": 19.42,
+        "char_count": 2973,
+        "block_count": 18,
+        "text_blocks": 18,
+        "spans": 284
+      },
+      "docling": {
+        "time_ms": 35201.22,
+        "time_sec": 35.2,
+        "memory_delta_mb": 0.0,
+        "char_count": 11728,
+        "table_count": 1,
+        "heading_count": 1,
+        "picture_count": 0
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 1812.6,
+        "char_difference": 8755
+      }
+    },
+    {
+      "paper_id": "1706.03762v7",
+      "paper_title": "Attention Is All You Need",
+      "page_num": 11,
+      "category": "Dense References",
+      "description": "References section, dense two-column citations with authors, titles, arXiv links.",
+      "pymupdf": {
+        "time_ms": 13.91,
+        "char_count": 3216,
+        "block_count": 39,
+        "text_blocks": 39,
+        "spans": 333
+      },
+      "docling": {
+        "time_ms": 3125.19,
+        "time_sec": 3.13,
+        "memory_delta_mb": 143.04,
+        "char_count": 3244,
+        "table_count": 0,
+        "heading_count": 0,
+        "picture_count": 0
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 224.7,
+        "char_difference": 28
+      }
+    },
+    {
+      "paper_id": "2410.00037v1",
+      "paper_title": "Moshi: A Speech-Text Foundation Model for Real-Time Dialogue",
+      "page_num": 7,
+      "category": "Math & Formulas",
+      "description": "Section 3.2 RVQ codebook equations (1)-(5), multi-stream hierarchy math, continuous prose.",
+      "pymupdf": {
+        "time_ms": 14.97,
+        "char_count": 3548,
+        "block_count": 9,
+        "text_blocks": 9,
+        "spans": 920
+      },
+      "docling": {
+        "time_ms": 2731.75,
+        "time_sec": 2.73,
+        "memory_delta_mb": 33.1,
+        "char_count": 3499,
+        "table_count": 0,
+        "heading_count": 3,
+        "picture_count": 0
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 182.5,
+        "char_difference": -49
+      }
+    },
+    {
+      "paper_id": "2410.00037v1",
+      "paper_title": "Moshi: A Speech-Text Foundation Model for Real-Time Dialogue",
+      "page_num": 33,
+      "category": "Ablation Table",
+      "description": "Table 10 Quantization ablation with ViSQOL, Mel distance, UTMOS multi-column headers.",
+      "pymupdf": {
+        "time_ms": 10.87,
+        "char_count": 2546,
+        "block_count": 17,
+        "text_blocks": 17,
+        "spans": 682
+      },
+      "docling": {
+        "time_ms": 16257.06,
+        "time_sec": 16.26,
+        "memory_delta_mb": 0.0,
+        "char_count": 4709,
+        "table_count": 3,
+        "heading_count": 0,
+        "picture_count": 0
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 1495.6,
+        "char_difference": 2163
+      }
+    },
+    {
+      "paper_id": "2410.00037v1",
+      "paper_title": "Moshi: A Speech-Text Foundation Model for Real-Time Dialogue",
+      "page_num": 66,
+      "category": "Lexical Listing / Unpunctuated",
+      "description": "Table 19 92 speaking styles listing (<whisper>, <fast>, etc.), dense unpunctuated tokens.",
+      "pymupdf": {
+        "time_ms": 4.02,
+        "char_count": 1024,
+        "block_count": 4,
+        "text_blocks": 4,
+        "spans": 155
+      },
+      "docling": {
+        "time_ms": 4542.04,
+        "time_sec": 4.54,
+        "memory_delta_mb": 0.0,
+        "char_count": 1905,
+        "table_count": 1,
+        "heading_count": 0,
+        "picture_count": 0
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 1129.9,
+        "char_difference": 881
+      }
+    },
+    {
+      "paper_id": "2507.07955v2",
+      "paper_title": "Dynamic Chunking for End-to-End Hierarchical Sequence Modeling",
+      "page_num": 6,
+      "category": "Algorithmic Math",
+      "description": "Section 3 Dynamic Chunking equations (2)-(6), argmax operations, hierarchical tokens.",
+      "pymupdf": {
+        "time_ms": 62.57,
+        "char_count": 3794,
+        "block_count": 25,
+        "text_blocks": 25,
+        "spans": 375
+      },
+      "docling": {
+        "time_ms": 2660.1,
+        "time_sec": 2.66,
+        "memory_delta_mb": 20.32,
+        "char_count": 3787,
+        "table_count": 0,
+        "heading_count": 3,
+        "picture_count": 0
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 42.5,
+        "char_difference": -7
+      }
+    },
+    {
+      "paper_id": "2507.07955v2",
+      "paper_title": "Dynamic Chunking for End-to-End Hierarchical Sequence Modeling",
+      "page_num": 19,
+      "category": "Floating Figures & Captions",
+      "description": "Floating Figures 9 & 10 ablation curves embedded between split body paragraphs.",
+      "pymupdf": {
+        "time_ms": 76.75,
+        "char_count": 3829,
+        "block_count": 44,
+        "text_blocks": 44,
+        "spans": 268
+      },
+      "docling": {
+        "time_ms": 3143.51,
+        "time_sec": 3.14,
+        "memory_delta_mb": 0.0,
+        "char_count": 3579,
+        "table_count": 0,
+        "heading_count": 0,
+        "picture_count": 2
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 41.0,
+        "char_difference": -250
+      }
+    },
+    {
+      "paper_id": "2507.07955v2",
+      "paper_title": "Dynamic Chunking for End-to-End Hierarchical Sequence Modeling",
+      "page_num": 39,
+      "category": "Byte Streams & Monospace",
+      "description": "Figure 16 UTF-8 hex byte stream table and tokenization bias analysis.",
+      "pymupdf": {
+        "time_ms": 31.93,
+        "char_count": 4087,
+        "block_count": 23,
+        "text_blocks": 23,
+        "spans": 606
+      },
+      "docling": {
+        "time_ms": 2918.73,
+        "time_sec": 2.92,
+        "memory_delta_mb": 33.95,
+        "char_count": 2950,
+        "table_count": 0,
+        "heading_count": 0,
+        "picture_count": 1
+      },
+      "comparison": {
+        "docling_to_pymupdf_time_ratio": 91.4,
+        "char_difference": -1137
+      }
+    }
+  ]
+}

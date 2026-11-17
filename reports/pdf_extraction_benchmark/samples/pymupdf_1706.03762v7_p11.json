@@ -1,0 +1,405 @@
+{
+  "execution_time_ms": 13.91,
+  "char_count": 3216,
+  "total_blocks": 39,
+  "text_block_count": 39,
+  "image_block_count": 0,
+  "span_count": 333,
+  "unique_fonts": [
+    "NimbusRomNo9L-Regu",
+    "NimbusRomNo9L-ReguItal"
+  ],
+  "raw_text_excerpt": "[5] Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, Fethi Bougares, Holger Schwenk,\nand Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical\nmachine translation. CoRR, abs/1406.1078, 2014.\n[6] Francois Chollet. Xception: Deep learning with depthwise separable convolutions. arXiv\npreprint arXiv:1610.02357, 2016.\n[7] Junyoung Chung, Çaglar Gülçehre, Kyunghyun Cho, and Yoshua Bengio. Empirical evaluation\nof gated recurrent neural networks on sequence modeli",
+  "structured_blocks": [
+    {
+      "block_no": 0,
+      "bbox": [
+        112.98,
+        74.33,
+        505.24,
+        84.39
+      ],
+      "text": "[5] Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, Fethi Bougares, Holger Schwenk,"
+    },
+    {
+      "block_no": 1,
+      "bbox": [
+        129.58,
+        85.31,
+        504.0,
+        106.19
+      ],
+      "text": "and Yoshua Bengio. Learning phrase representations using rnn encoder-decoder for statistical\nmachine translation. CoRR, abs/1406.1078, 2014."
+    },
+    {
+      "block_no": 2,
+      "bbox": [
+        112.98,
+        115.77,
+        504.0,
+        126.01
+      ],
+      "text": "[6] Francois Chollet. Xception: Deep learning with depthwise separable convolutions. arXiv"
+    },
+    {
+      "block_no": 3,
+      "bbox": [
+        129.58,
+        126.76,
+        264.53,
+        136.9
+      ],
+      "text": "preprint arXiv:1610.02357, 2016."
+    },
+    {
+      "block_no": 4,
+      "bbox": [
+        112.98,
+        146.74,
+        504.0,
+        156.7
+      ],
+      "text": "[7] Junyoung Chung, Çaglar Gülçehre, Kyunghyun Cho, and Yoshua Bengio. Empirical evaluation"
+    },
+    {
+      "block_no": 5,
+      "bbox": [
+        129.58,
+        157.47,
+        478.88,
+        167.61
+      ],
+      "text": "of gated recurrent neural networks on sequence modeling. CoRR, abs/1412.3555, 2014."
+    },
+    {
+      "block_no": 6,
+      "bbox": [
+        112.98,
+        177.37,
+        504.0,
+        187.43
+      ],
+      "text": "[8] Chris Dyer, Adhiguna Kuncoro, Miguel Ballesteros, and Noah A. Smith. Recurrent neural"
+    },
+    {
+      "block_no": 7,
+      "bbox": [
+        129.58,
+        188.18,
+        313.3,
+        198.32
+      ],
+      "text": "network grammars. In Proc. of NAACL, 2016."
+    },
+    {
+      "block_no": 8,
+      "bbox": [
+        112.98,
+        208.11,
+        505.65,
+        218.13
+      ],
+      "text": "[9] Jonas Gehring, Michael Auli, David Grangier, Denis Yarats, and Yann N. Dauphin. Convolu-"
+    },
+    {
+      "block_no": 9,
+      "bbox": [
+        129.58,
+        218.89,
+        450.72,
+        229.03
+      ],
+      "text": "tional sequence to sequence learning. arXiv preprint arXiv:1705.03122v2, 2017."
+    },
+    {
+      "block_no": 10,
+      "bbox": [
+        108.0,
+        238.61,
+        504.0,
+        259.74
+      ],
+      "text": "[10] Alex Graves.\nGenerating sequences with recurrent neural networks.\narXiv preprint\narXiv:1308.0850, 2013."
+    },
+    {
+      "block_no": 11,
+      "bbox": [
+        108.0,
+        269.5,
+        505.65,
+        279.56
+      ],
+      "text": "[11] Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for im-"
+    },
+    {
+      "block_no": 12,
+      "bbox": [
+        129.27,
+        280.23,
+        504.0,
+        301.36
+      ],
+      "text": "age recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern\nRecognition, pages 770–778, 2016."
+    },
+    {
+      "block_no": 13,
+      "bbox": [
+        108.0,
+        311.14,
+        504.0,
+        321.18
+      ],
+      "text": "[12] Sepp Hochreiter, Yoshua Bengio, Paolo Frasconi, and Jürgen Schmidhuber. Gradient flow in"
+    },
+    {
+      "block_no": 14,
+      "bbox": [
+        129.58,
+        322.11,
+        412.15,
+        332.07
+      ],
+      "text": "recurrent nets: the difficulty of learning long-term dependencies, 2001."
+    },
+    {
+      "block_no": 15,
+      "bbox": [
+        108.0,
+        341.65,
+        505.25,
+        351.89
+      ],
+      "text": "[13] Sepp Hochreiter and Jürgen Schmidhuber. Long short-term memory. Neural computation,"
+    },
+    {
+      "block_no": 16,
+      "bbox": [
+        129.58,
+        352.82,
+        221.18,
+        362.78
+      ],
+      "text": "9(8):1735–1780, 1997."
+    },
+    {
+      "block_no": 17,
+      "bbox": [
+        108.0,
+        372.54,
+        504.0,
+        382.6
+      ],
+      "text": "[14] Zhongqiang Huang and Mary Harper. Self-training PCFG grammars with latent annotations"
+    },
+    {
+      "block_no": 18,
+      "bbox": [
+        129.3,
+        383.27,
+        504.0,
+        404.4
+      ],
+      "text": "across languages. In Proceedings of the 2009 Conference on Empirical Methods in Natural\nLanguage Processing, pages 832–841. ACL, August 2009."
+    },
+    {
+      "block_no": 19,
+      "bbox": [
+        108.0,
+        414.19,
+        504.0,
+        424.21
+      ],
+      "text": "[15] Rafal Jozefowicz, Oriol Vinyals, Mike Schuster, Noam Shazeer, and Yonghui Wu. Exploring"
+    },
+    {
+      "block_no": 20,
+      "bbox": [
+        129.58,
+        424.97,
+        421.98,
+        435.11
+      ],
+      "text": "the limits of language modeling. arXiv preprint arXiv:1602.02410, 2016."
+    },
+    {
+      "block_no": 21,
+      "bbox": [
+        108.0,
+        444.84,
+        504.0,
+        454.91
+      ],
+      "text": "[16] Łukasz Kaiser and Samy Bengio. Can active memory replace attention? In Advances in Neural"
+    },
+    {
+      "block_no": 22,
+      "bbox": [
+        129.41,
+        455.68,
+        317.4,
+        465.82
+      ],
+      "text": "Information Processing Systems, (NIPS), 2016."
+    },
+    {
+      "block_no": 23,
+      "bbox": [
+        108.0,
+        475.51,
+        504.0,
+        485.62
+      ],
+      "text": "[17] Łukasz Kaiser and Ilya Sutskever. Neural GPUs learn algorithms. In International Conference"
+    },
+    {
+      "block_no": 24,
+      "bbox": [
+        129.58,
+        486.39,
+        303.0,
+        496.53
+      ],
+      "text": "on Learning Representations (ICLR), 2016."
+    },
+    {
+      "block_no": 25,
+      "bbox": [
+        108.0,
+        506.37,
+        505.65,
+        516.33
+      ],
+      "text": "[18] Nal Kalchbrenner, Lasse Espeholt, Karen Simonyan, Aaron van den Oord, Alex Graves, and Ko-"
+    },
+    {
+      "block_no": 26,
+      "bbox": [
+        129.58,
+        517.18,
+        505.24,
+        538.15
+      ],
+      "text": "ray Kavukcuoglu. Neural machine translation in linear time. arXiv preprint arXiv:1610.10099v2,\n2017."
+    },
+    {
+      "block_no": 27,
+      "bbox": [
+        108.0,
+        547.98,
+        505.75,
+        557.95
+      ],
+      "text": "[19] Yoon Kim, Carl Denton, Luong Hoang, and Alexander M. Rush. Structured attention networks."
+    },
+    {
+      "block_no": 28,
+      "bbox": [
+        129.58,
+        558.72,
+        386.19,
+        568.86
+      ],
+      "text": "In International Conference on Learning Representations, 2017."
+    },
+    {
+      "block_no": 29,
+      "bbox": [
+        108.0,
+        578.56,
+        505.75,
+        588.66
+      ],
+      "text": "[20] Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR, 2015."
+    },
+    {
+      "block_no": 30,
+      "bbox": [
+        108.0,
+        598.35,
+        504.0,
+        608.46
+      ],
+      "text": "[21] Oleksii Kuchaiev and Boris Ginsburg. Factorization tricks for LSTM networks. arXiv preprint"
+    },
+    {
+      "block_no": 31,
+      "bbox": [
+        129.58,
+        609.23,
+        229.75,
+        619.37
+      ],
+      "text": "arXiv:1703.10722, 2017."
+    },
+    {
+      "block_no": 32,
+      "bbox": [
+        108.0,
+        629.13,
+        504.0,
+        639.19
+      ],
+      "text": "[22] Zhouhan Lin, Minwei Feng, Cicero Nogueira dos Santos, Mo Yu, Bing Xiang, Bowen"
+    },
+    {
+      "block_no": 33,
+      "bbox": [
+        129.58,
+        639.86,
+        504.0,
+        660.99
+      ],
+      "text": "Zhou, and Yoshua Bengio. A structured self-attentive sentence embedding. arXiv preprint\narXiv:1703.03130, 2017."
+    },
+    {
+      "block_no": 34,
+      "bbox": [
+        108.0,
+        670.83,
+        504.25,
+        680.79
+      ],
+      "text": "[23] Minh-Thang Luong, Quoc V. Le, Ilya Sutskever, Oriol Vinyals, and Lukasz Kaiser. Multi-task"
+    },
+    {
+      "block_no": 35,
+      "bbox": [
+        129.58,
+        681.56,
+        416.13,
+        691.7
+      ],
+      "text": "sequence to sequence learning. arXiv preprint arXiv:1511.06114, 2015."
+    },
+    {
+      "block_no": 36,
+      "bbox": [
+        108.0,
+        701.54,
+        505.65,
+        711.5
+      ],
+      "text": "[24] Minh-Thang Luong, Hieu Pham, and Christopher D Manning. Effective approaches to attention-"
+    },
+    {
+      "block_no": 37,
+      "bbox": [
+        129.58,
+        712.27,
+        426.1,
+        722.41
+      ],
+      "text": "based neural machine translation. arXiv preprint arXiv:1508.04025, 2015."
+    },
+    {
+      "block_no": 38,
+      "bbox": [
+        301.02,
+        742.33,
+        310.98,
+        752.3
+      ],
+      "text": "11"
+    }
+  ]
+}

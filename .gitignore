@@ -1,0 +1,49 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+.venv/
+.venv_docling/
+env/
+venv/
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing and linting caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local temporary databases (allow committed pre-built retrieval indexes)
+*.sqlite3
+*.sqlite
+*.db
+!data/indexes/**
+!backend/data/indexes/**
+!submission/data/indexes/**
+!data/indexes/chroma/**
+!backend/data/indexes/chroma/**
+!data/indexes/fact_store.db
+!backend/data/indexes/fact_store.db
+
+# Temporary and build artifacts
+*.tmp
+*.temp
+*.log
+*.swp
+build/
+dist/
+*.egg-info/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini

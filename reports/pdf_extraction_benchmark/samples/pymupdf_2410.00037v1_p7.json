@@ -1,0 +1,106 @@
+{
+  "execution_time_ms": 14.97,
+  "char_count": 3548,
+  "total_blocks": 9,
+  "text_block_count": 9,
+  "image_block_count": 0,
+  "span_count": 920,
+  "unique_fonts": [
+    "CMBX10",
+    "CMCSC10",
+    "CMR10"
+  ],
+  "raw_text_excerpt": "Moshi: a speech-text foundation model for real-time dialogue\nMoshi is built on top of Helium, a text LLM which we build from scratch (Section 3.2),\nrelying on high-quality text data to provide strong reasoning abilities to the model. We also\npropose Inner Monologue (Section 3.4.4), a training and inference procedure in which we\njointly model text and audio tokens. This allows the model to fully exploit the knowledge\nimparted from the text modality, while remaining a speech-to-speech system. To e",
+  "structured_blocks": [
+    {
+      "block_no": 0,
+      "bbox": [
+        141.71,
+        37.99,
+        466.65,
+        47.96
+      ],
+      "text": "Moshi: a speech-text foundation model for real-time dialogue"
+    },
+    {
+      "block_no": 1,
+      "bbox": [
+        90.0,
+        93.3,
+        522.08,
+        266.79
+      ],
+      "text": "Moshi is built on top of Helium, a text LLM which we build from scratch (Section 3.2),\nrelying on high-quality text data to provide strong reasoning abilities to the model. We also\npropose Inner Monologue (Section 3.4.4), a training and inference procedure in which we\njointly model text and audio tokens. This allows the model to fully exploit the knowledge\nimparted from the text modality, while remaining a speech-to-speech system. To enable\nreal-time dialogue, we also design Moshi as a multi-stream architecture from the get-go\n(Section 3.4.3): The model is able to both speak and listen to the user at the same time,\nand does not need to explicitly model speaker turns. In addition, to capture the input user\naudio and output Moshi’s voice with high quality and in an efficient manner, we propose\nMimi (Section 3.3), a neural audio codec combining semantic and acoustic information\ninto a single tokenizer by using residual vector quantization and knowledge distillation. To\njointly model the audio streams from Moshi and the user, as well as Moshi’s text tokens, we\nrely on a Depth Transformer compatible with streaming inference (Sections 3.4.1, 3.4.2)."
+    },
+    {
+      "block_no": 2,
+      "bbox": [
+        90.0,
+        269.58,
+        522.08,
+        334.69
+      ],
+      "text": "In this section, we further detail each of these components. We then describe the training\ndatasets and the different training phases we used to train Moshi in Section 4. Finally, in\nSection 5, we report thorough evaluation results on Moshi’s abilities, both linguistic and\nacoustic, as well as ablation experiments on its main components, while Section 6 provides\nanalyses on the safety of our system."
+    },
+    {
+      "block_no": 3,
+      "bbox": [
+        90.0,
+        351.88,
+        302.06,
+        362.78
+      ],
+      "text": "3.2 The Helium Text Language Model"
+    },
+    {
+      "block_no": 4,
+      "bbox": [
+        90.0,
+        368.95,
+        197.5,
+        379.86
+      ],
+      "text": "3.2.1 Architecture"
+    },
+    {
+      "block_no": 5,
+      "bbox": [
+        90.0,
+        390.79,
+        522.35,
+        564.29
+      ],
+      "text": "Helium is an autoregressive language model, based on the Transformer architecture (Vaswani\net al., 2017). Following previous work in this area, we make the following changes to the\noriginal architecture: First, we use RMS normalization (Zhang and Sennrich, 2019) at the\ninput of the attention blocks, the feed-forward blocks and the output linear layer of the\nmodel. We use rotation positional embeddings (Su et al., 2024, RoPE), a context length\nof 4,096 tokens and FlashAttention (Dao et al., 2022) for efficient training. Finally, we\nchange the architecture of the feed-forward blocks and use Gated Linear Units (Shazeer,\n2020), with the SiLU activation as a gating function (Hendrycks and Gimpel, 2016b). Our\ntokenizer is based on the unigram model from SentencePiece (Kudo and Richardson, 2018),\nand contains 32,000 elements mostly targeting English. We split all numbers into single\ndigits, and use byte-backoff to ensure that our tokenizer does not lose information. We\ntrain the model with the AdamW (Loshchilov and Hutter, 2017) optimizer, with a fixed\nlearning rate followed by a cosine learning rate decay (Loshchilov and Hutter, 2016)."
+    },
+    {
+      "block_no": 6,
+      "bbox": [
+        90.0,
+        577.65,
+        275.88,
+        588.56
+      ],
+      "text": "3.2.2 Pre-training data filtering"
+    },
+    {
+      "block_no": 7,
+      "bbox": [
+        90.0,
+        599.49,
+        522.1,
+        705.25
+      ],
+      "text": "Training data is one of the critical ingredients to train LLMs: we now describe our method to\nobtain a large and high-quality text dataset. We start from high-quality data sources, such\nas Wikipedia, Stack Exchange and a large collection of scientific articles. As the quantity\nof data from these sources is too small to train a LLM, we also rely on web crawled data,\nspecifically from CommonCrawl, to extend our dataset. See more details on data sources in\nSection 4.1. Web data requires extensive processing to obtain a high-quality training set:\nwe perform deduplication, language identification and quality filtering. In the following, we\ndescribe each operation in more details."
+    },
+    {
+      "block_no": 8,
+      "bbox": [
+        303.51,
+        724.96,
+        308.49,
+        734.93
+      ],
+      "text": "7"
+    }
+  ]
+}

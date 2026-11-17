@@ -1,0 +1,9 @@
+{
+  "paper_id": "2507.07955v2",
+  "page_num": 6,
+  "execution_time_ms": 2660.1,
+  "table_count": 0,
+  "heading_count": 3,
+  "char_count": 3787,
+  "markdown_excerpt": "- First, we ensure the model width (often referred to as 𝑑model for isotropic architectures) is monotone in the hierarchy: 𝐷 0 ≤ 𝐷 1 ≤ · · · ≤ 𝐷𝑆 . This allows increasing compute and parameters used in the main network without significantly increasing its depth.\n- Second, using efficient and powerful SSM layers in the outer networks allow reducing the number of layers used compared to similar prior architectures that only used Transformer layers (Slagle 2024); in this paper, we always stick to four layers (or the equivalent of four Mamba layers) in each encoder/decoder network.\n\nTo handle the changes in dimensions without an additional linear layer, we adopt the technique used in SpaceByte (Slagle 2024) with the marginal change: to expand dimensions (i.e., 𝐷𝑠 → 𝐷𝑠+1 ), we append all vectors with a shared trainable vector of dimension 𝐷𝑠+1 - 𝐷𝑠 ; to reduce dimensions (i.e., 𝐷𝑠+1 → 𝐷𝑠 ), we take the first 𝐷𝑠 dimensions from each vector.\n\nWe note that H-Net's performance can likely be imp"
+}

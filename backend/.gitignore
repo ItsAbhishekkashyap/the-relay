@@ -1,0 +1,43 @@
+# ==============================================================================
+# The Relay — Backend .gitignore
+# ==============================================================================
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Virtual environments
+.venv/
+.venv*/
+env/
+venv/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Temporary and build artifacts
+*.tmp
+*.temp
+*.log
+*.swp
+build/
+dist/
+*.egg-info/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ensure pre-built retrieval indexes are committed for Render deployment
+!data/indexes/**
+!data/chunks/**
+!data/extracted/**

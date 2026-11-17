@@ -1,0 +1,1019 @@
+================================================================================
+THE RELAY — VAANI RESEARCH ML ENGINEERING ASSIGNMENT
+COMPREHENSIVE PROJECT NOTES AND REPOSITORY DOCUMENTATION
+================================================================================
+Document Version: 1.0.0
+Author: Implementation Agent (Antigravity)
+Date: November 2026
+Environment: Python 3.12.0 | Windows 11 | uv package manager
+Output File: reports/PROJECT_NOTES.txt
+================================================================================
+
+TABLE OF CONTENTS
+-----------------
+1. SECTION 1: PROJECT OVERVIEW
+   1.1 What is "The Relay" Assignment?
+   1.2 The Problem We Are Solving
+   1.3 What the Complete System Will Do
+   1.4 Core Technologies and Why We Chose Them
+   1.5 High-Level Architecture Explained Simply
+
+2. SECTION 2: CURRENT DIRECTORY STRUCTURE
+   2.1 Complete Repository Tree
+   2.2 Root-Level Files
+   2.3 Directory Breakdown: app/retrieval/
+   2.4 Directory Breakdown: app/providers/
+   2.5 Directory Breakdown: app/traffic/
+   2.6 Directory Breakdown: simulator/
+   2.7 Directory Breakdown: scripts/
+   2.8 Directory Breakdown: data/
+   2.9 Directory Breakdown: papers/
+   2.10 Directory Breakdown: reports/
+   2.11 Directory Breakdown: tests/
+   2.12 Directory Breakdown: experiments/ and assistant_history/
+
+3. SECTION 3: WORK COMPLETED SO FAR (CHRONOLOGICAL STAGES)
+   3.1 Stage 1: Project Setup and Environment
+   3.2 Stage 2.1: High-Fidelity PDF Extraction
+   3.3 Stage 2.2: Chunking Strategy Prototype
+   3.4 Stage 2.2A: Docling vs. PyMuPDF Benchmark Evaluation
+   3.5 Stage 2.3A: LangChain Dependency Setup
+   3.6 Stage 2.3B: LangChain PDF Ingestion and Token-Aware Chunking
+   3.7 Stage 2.4: Hybrid Multi-Modal Retrieval Engine
+   3.8 Stage 3A: Real Groq Provider and Local Stand-in Model Simulator
+   3.9 Stage 3B: Asynchronous Traffic Manager and Concurrency Controller
+
+4. SECTION 4: HOW THE COMPONENTS CONNECT (DATA FLOW & DIAGRAMS)
+   4.1 Implemented Component Architecture (ASCII Diagram)
+   4.2 Step-by-Step Data Flow
+   4.3 Implemented vs. Pending Components
+
+5. SECTION 5: IMPORTANT TECHNICAL DECISIONS & TRADE-OFFS
+   5.1 What We Chose and Why
+   5.2 What We Deliberately Avoided
+
+6. SECTION 6: TESTING AND VERIFICATION
+   6.1 Historical Milestone Test Results
+   6.2 Current Test Suite Breakdown (135 Tests)
+   6.3 Verification Commands
+
+7. SECTION 7: CURRENT PROJECT STATUS
+   7.1 Status Matrix of All Stages
+   7.2 Completed Deliverables vs. Next Steps
+
+8. SECTION 8: IMPORTANT CONFIGURATION AND RUN COMMANDS
+   8.1 Virtual Environment and uv CLI Commands
+   8.2 Running the Test Suite
+   8.3 Running Extraction and Indexing Scripts
+   8.4 Running the Local Model Simulator
+   8.5 Environment Variables and Secret Hygiene
+
+9. SECTION 9: KNOWN LIMITATIONS AND OPERATIONAL ASSUMPTIONS
+   9.1 Known Limitations
+   9.2 Operational Assumptions
+   9.3 Deprecation Warnings and Rules of Thumb
+
+10. SECTION 10: WHAT WE WILL BUILD NEXT
+    10.1 Stage 3C: LangGraph Workflow Integration
+    10.2 Subsequent Evaluation, Calibration, and Final Reporting
+
+================================================================================
+SECTION 1: PROJECT OVERVIEW
+================================================================================
+
+1.1 What is "The Relay" Assignment?
+------------------------------------
+"The Relay" is a machine learning engineering project designed by Vaani
+Research. The assignment requires building a production-grade, highly reliable,
+and verifiable Research Assistant.
+
+The assistant is strictly constrained to answer technical questions from three
+specific arXiv research papers:
+1. arXiv:1706.03762v7 - "Attention Is All You Need" (The Transformer paper)
+2. arXiv:2410.00037v1 - "Moshi: A Speech-Text Foundation Model for Real-Time
+   Dialogue"
+3. arXiv:2507.07955v2 - "Dynamic Chunking for End-to-End Hierarchical Sequence
+   Modeling"
+
+1.2 The Problem We Are Solving
+------------------------------
+Standard Large Language Model (LLM) applications face severe real-world problems:
+1. Hallucination: Models invent plausible-sounding facts, equations, and page
+   numbers when they do not know the answer.
+2. Lack of Traceability: General chat assistants cannot point to the exact
+   table, page, or paragraph that proves their statement.
+3. Fragile Rate Limits: Cloud model providers (like Groq, OpenAI, or Anthropic)
+   strictly limit Requests Per Minute (RPM), Tokens Per Minute (TPM), and daily
+   call volumes. Uncontrolled bursts crash applications with HTTP 429 errors.
+4. Upstream Latency and Outages: Network dropouts, transient 5xx errors, and
+   slow token generation degrade user experience unless handled by an
+   intelligent traffic management layer.
+
+1.3 What the Complete System Will Do
+------------------------------------
+When fully assembled, the system will:
+- Ingest the original research PDFs with 100% text and table fidelity.
+- Search for evidence across three complementary retrieval channels:
+  * Dense semantic embeddings (understanding concepts and paraphrases).
+  * Sparse BM25 keyword matching (finding exact names, numbers, and formulas).
+  * Structured SQLite tables (retrieving raw tables, metrics, and exact facts).
+- Fuse search results using Reciprocal Rank Fusion (RRF) with exact citations.
+- Route user requests through an asynchronous Traffic Manager that enforces
+  queuing, deadlines, concurrency ceilings, local rate admission, and retries.
+- Pass prompts to either a real high-speed cloud provider (Groq) or a local
+  mock simulator (FastAPI stand-in) that replicates latency and rate limits.
+- Orchestrate the multi-step reasoning flow using a stateful LangGraph agent
+  (to be implemented in Stage 3C).
+
+1.4 Core Technologies and Why We Chose Them
+-------------------------------------------
+- Python 3.12: Modern, robust async/await syntax, strong typing, and performance.
+- uv (by Astral): Extremely fast Rust-based Python package and virtualenv manager.
+- PyMuPDF (fitz): High-speed, zero-dependency PDF text and table extraction.
+- LangChain: Standard document representation and recursive text chunking.
+- Sentence Transformers: Local dense vector embeddings (all-MiniLM-L6-v2) that run
+  efficiently on CPU without external API costs or rate limits.
+- ChromaDB: Lightweight, embeddable, persistent vector database.
+- rank-bm25: Fast in-memory probabilistic keyword retrieval algorithm.
+- SQLite3 & FTS5: Built-in, zero-dependency SQL database with full-text search
+  for structured tables and numerical facts.
+- FastAPI & Uvicorn: Modern asynchronous web framework powering the stand-in
+  simulator.
+- Groq Python SDK: Ultra-fast LPU cloud inference engine for production calls.
+- Pydantic v2: Strict data validation and settings management across schemas.
+- pytest & anyio: Comprehensive asynchronous test automation framework.
+
+1.5 High-Level Architecture Explained Simply
+--------------------------------------------
+Think of the system like a research library with a security desk:
+1. The Books: The three research papers stored as PDF files.
+2. The Index Cards: PyMuPDF and LangChain break the books into smaller,
+   labeled index cards (chunks) with page numbers and section headers.
+3. The Search System (Hybrid Retrieval):
+   - The Semantic Librarian (ChromaDB) finds ideas that mean the same thing.
+   - The Keyword Catalog (BM25) finds exact words and acronyms like "d_model".
+   - The Fact Ledger (SQLite) looks up exact numbers and markdown tables.
+   - The Fusion Judge (RRF) combines all three lists and picks the best cards.
+4. The Dispatcher (Traffic Manager): A smart gatekeeper that organizes questions
+   in a line (FIFO queue), ensures no more than 5 questions run at once,
+   prevents exceeding rate limits, and retries if an answer dropped.
+5. The Answering Machine: Groq (real AI) or the Simulator (local training AI).
+
+================================================================================
+SECTION 2: CURRENT DIRECTORY STRUCTURE
+================================================================================
+
+2.1 Complete Repository Tree
+----------------------------
+Below is the actual directory tree of the repository (excluding `.venv`,
+`.venv_docling`, `__pycache__`, and `.git`):
+
+RELAY ASSIGNMENT/
+|-- .env.example
+|-- .gitignore
+|-- pyproject.toml
+|-- requirements.txt
+|-- uv.lock
+|
+|-- app/
+|   |-- providers/
+|   |   |-- __init__.py
+|   |   |-- base.py
+|   |   |-- groq_provider.py
+|   |   |-- schemas.py
+|   |   `-- simulator_provider.py
+|   |-- retrieval/
+|   |   |-- __init__.py
+|   |   |-- bm25_retriever.py
+|   |   |-- chunking.py
+|   |   |-- dense_retriever.py
+|   |   |-- fact_store.py
+|   |   |-- hybrid_retriever.py
+|   |   |-- langchain_chunking.py
+|   |   `-- pdf_ingestion.py
+|   `-- traffic/
+|       |-- __init__.py
+|       |-- config.py
+|       |-- errors.py
+|       |-- manager.py
+|       `-- metrics.py
+|
+|-- assistant_history/             [Directory exists; currently empty]
+|
+|-- data/
+|   |-- chunks/
+|   |   |-- fixed_size/
+|   |   |   |-- 1706.03762v7.json
+|   |   |   |-- 2410.00037v1.json
+|   |   |   `-- 2507.07955v2.json
+|   |   |-- langchain_recursive/
+|   |   |   |-- 1706.03762v7.json
+|   |   |   |-- 2410.00037v1.json
+|   |   |   `-- 2507.07955v2.json
+|   |   |-- sentence_aware/
+|   |   |   |-- 1706.03762v7.json
+|   |   |   |-- 2410.00037v1.json
+|   |   |   `-- 2507.07955v2.json
+|   |   `-- structure_aware/
+|   |       |-- 1706.03762v7.json
+|   |       |-- 2410.00037v1.json
+|   |       `-- 2507.07955v2.json
+|   |-- extracted/
+|   |   |-- 1706.03762v7.json
+|   |   |-- 2410.00037v1.json
+|   |   `-- 2507.07955v2.json
+|   `-- indexes/
+|       |-- fact_store.db
+|       |-- bm25/
+|       |   `-- bm25_index.json
+|       `-- chroma/
+|           |-- chroma.sqlite3
+|           `-- 58459756-c9a4-4742-98f7-6c41a6a05577/
+|               |-- data_level0.bin
+|               |-- header.bin
+|               |-- index_metadata.pickle
+|               |-- length.bin
+|               `-- link_lists.bin
+|
+|-- experiments/                   [Directory exists; currently empty]
+|
+|-- papers/
+|   |-- 1706.03762v7.pdf
+|   |-- 2410.00037v1.pdf
+|   `-- 2507.07955v2.pdf
+|
+|-- reports/
+|   |-- chunking_preview.txt
+|   |-- chunking_report.json
+|   |-- extraction_preview.txt
+|   |-- extraction_report.json
+|   |-- hybrid_retrieval_report.md
+|   |-- langchain_chunking_preview.txt
+|   |-- langchain_chunking_report.json
+|   `-- pdf_extraction_benchmark/
+|       |-- benchmark_report.json
+|       |-- benchmark_report.md
+|       `-- samples/
+|           |-- docling_1706.03762v7_p3.json
+|           |-- docling_1706.03762v7_p3.md
+|           |-- ... (18 benchmark sample files)
+|           `-- pymupdf_2507.07955v2_p6.json
+|
+|-- scripts/
+|   |-- benchmark_pdf_extraction.py
+|   |-- build_retrieval_index.py
+|   |-- chunk_papers.py
+|   |-- extract_papers.py
+|   `-- ingest_and_chunk_papers.py
+|
+|-- simulator/
+|   |-- config.py
+|   |-- main.py
+|   `-- service.py
+|
+`-- tests/
+    |-- conftest.py
+    |-- test_bm25_retriever.py
+    |-- test_chunking.py
+    |-- test_dense_retriever.py
+    |-- test_extract_papers.py
+    |-- test_fact_store.py
+    |-- test_groq_provider.py
+    |-- test_hybrid_retriever.py
+    |-- test_langchain_chunking.py
+    |-- test_pdf_ingestion.py
+    |-- test_simulator.py
+    `-- test_traffic_manager.py
+
+2.2 Root-Level Files
+--------------------
+- pyproject.toml: The single source of truth for project metadata, Python
+  version constraints (>=3.12), pytest configuration, and exact dependencies.
+- requirements.txt: Standard pip-compatible exported lockfile reflecting
+  installed virtual environment packages.
+- uv.lock: Fully resolved deterministic dependency lockfile generated by the
+  `uv` package manager to ensure reproducible installs across machines.
+- .env.example: Safe configuration template showing required environment
+  variable names (`GROQ_API_KEY`, `GROQ_MODEL`) with fake placeholder values.
+- .gitignore: Excludes virtual environments (`.venv`, `.venv_docling`), binary
+  caches (`__pycache__`, `.pytest_cache`), local index artifacts, and `.env`.
+
+2.3 Directory Breakdown: app/retrieval/
+---------------------------------------
+Contains all document processing, chunking algorithms, and retrieval engines:
+- pdf_ingestion.py: Uses PyMuPDF to extract PDF pages and convert them into
+  LangChain Document objects. Flushes prose groupings when headings appear so
+  sections are never mixed. Extracts tables into clean markdown representation.
+- langchain_chunking.py: Wraps LangChain's RecursiveCharacterTextSplitter.
+  Uses the Hugging Face `all-MiniLM-L6-v2` tokenizer to split text strictly by
+  token count (512 tokens maximum, 76 tokens overlap). Preserves all metadata.
+- chunking.py: Prototype chunking module from Stage 2.2 comparing fixed-size,
+  sentence-aware, and naive structure-aware splitting. Retained for historical
+  benchmarking.
+- dense_retriever.py: Manages ChromaDB persistent vector storage. Embeds chunks
+  using local Sentence Transformers (`all-MiniLM-L6-v2`) and executes cosine
+  similarity queries.
+- bm25_retriever.py: In-memory keyword search engine using `rank-bm25`. Features
+  a specialized tokenizer that preserves hyphenated terms, arXiv identifiers,
+  and mathematical symbols (e.g., `1706.03762v7`, `d_model`).
+- fact_store.py: SQLite3 database storing exact tables, formulas, and numeric
+  facts. Uses SQLite FTS5 for fast full-text searching and exact substring queries.
+- hybrid_retriever.py: Combines results from Dense, BM25, and FactStore channels
+  using Reciprocal Rank Fusion (RRF). Enforces transparent error handling so channel
+  failures are visible rather than silently hidden.
+- __init__.py: Exposes public retrieval classes and schemas.
+
+2.4 Directory Breakdown: app/providers/
+---------------------------------------
+Contains the model provider interface and adapters for cloud and local models:
+- schemas.py: Core Pydantic data contracts: `GenerationRequest`,
+  `GenerationResponse`, `StreamChunk`, `TokenUsage`, `ChatMessage`, and
+  `ErrorCategory`. Used by both real providers and the simulator.
+- base.py: Abstract base class `BaseModelProvider` and the complete exception
+  hierarchy: `ModelProviderError`, `RateLimitError` (with `retry_after`),
+  `AuthenticationError`, `TimeoutError`, `ProviderServerError`,
+  `ConnectionError`, and `InvalidResponseError`.
+- groq_provider.py: Production provider communicating with the Groq Cloud API
+  using the official `groq` async SDK. Handles authentication, non-streaming
+  completions, and incremental streaming with trailing token usage capture.
+- simulator_provider.py: Client adapter connecting to the local custom
+  FastAPI simulator via asynchronous HTTP (`httpx.AsyncClient`). Mirrors the
+  exact same interface as the Groq provider.
+- __init__.py: Exports provider classes and error types.
+
+2.5 Directory Breakdown: app/traffic/
+-------------------------------------
+Implements the central asynchronous traffic management and admission layer:
+- config.py: Pydantic settings (`TrafficManagerConfig`) for queue capacity,
+  concurrency limits, request timeouts, RPM/TPM ceilings, and backoff retries.
+- errors.py: Specialized traffic exceptions: `QueueFullError`,
+  `QueueTimeoutError`, `ExecutionTimeoutError`, `LocalRateLimitError`,
+  `StreamAlreadyStartedError`, and `TrafficManagerClosedError`.
+- manager.py: Core `TrafficManager` class. Manages a bounded FIFO queue,
+  active in-flight concurrency, sliding 60-second RPM/TPM reservations, UTC
+  daily budgets, centralized transient retries, incremental streaming chunk
+  pass-through, and cancellation-safe accounting.
+- metrics.py: Thread-safe operational metrics collector (`TrafficMetricsTracker`)
+  and point-in-time immutable metrics snapshot (`TrafficMetricsSnapshot`).
+- __init__.py: Exports traffic manager classes.
+
+2.6 Directory Breakdown: simulator/
+-----------------------------------
+A standalone custom FastAPI application that mimics a remote LLM API endpoint:
+- config.py: Settings model (`SimulatorConfig`) controlling artificial latency,
+  statistical jitter, RPM limits, TPM limits, daily budgets, concurrency caps,
+  and deterministic failure rates.
+- service.py: Core stateful simulation logic. Tracks in-flight reservations,
+  sliding-window completed requests, daily quotas, and streams fake text deltas.
+- main.py: FastAPI entry point exposing `/v1/chat/completions`, `/health`,
+  `/status`, and `/admin/configure`.
+
+2.7 Directory Breakdown: scripts/
+---------------------------------
+Executable command-line scripts for data processing and index building:
+- extract_papers.py: CLI script that reads PDFs with PyMuPDF and outputs
+  raw extracted text and tables to `data/extracted/`.
+- chunk_papers.py: CLI script running prototype chunking methods from Stage 2.2.
+- benchmark_pdf_extraction.py: Benchmark harness evaluating Docling vs. PyMuPDF.
+- ingest_and_chunk_papers.py: Official production pipeline script converting
+  PDFs into LangChain Documents and splitting them with token awareness.
+- build_retrieval_index.py: Generates persistent indexes (ChromaDB embeddings,
+  BM25 JSON index, SQLite fact store) from chunked JSON files.
+
+2.8 Directory Breakdown: data/
+------------------------------
+Stores raw inputs, intermediate representations, and compiled indexes:
+- data/extracted/: Raw JSON files containing page-by-page text, blocks, and
+  tables extracted directly from the three arXiv PDFs.
+- data/chunks/: Chunked datasets organized by algorithm:
+  * `fixed_size/`: Naive fixed character chunks.
+  * `sentence_aware/`: Punctuation-aware sentence chunks.
+  * `structure_aware/`: Heading-aware prototype chunks.
+  * `langchain_recursive/`: Production LangChain token-aware chunks (402 chunks).
+- data/indexes/: Compiled persistent search indexes:
+  * `chroma/`: ChromaDB persistent SQLite file and binary vector index files.
+  * `bm25/`: Serialized BM25 frequency dictionary (`bm25_index.json`).
+  * `fact_store.db`: SQLite database with tables and FTS5 search index.
+
+2.9 Directory Breakdown: papers/
+--------------------------------
+Contains the three exact-version research PDFs that serve as the ground truth:
+- `1706.03762v7.pdf` (Attention Is All You Need, 15 pages)
+- `2410.00037v1.pdf` (Moshi Voice-Text Foundation Model, 66 pages)
+- `2507.07955v2.pdf` (Dynamic Chunking Sequence Modeling, 39 pages)
+
+2.10 Directory Breakdown: reports/
+----------------------------------
+Machine-readable JSON and human-readable text/markdown verification reports:
+- `extraction_report.json` & `extraction_preview.txt`: Extraction metrics.
+- `chunking_report.json` & `chunking_preview.txt`: Prototype chunking metrics.
+- `langchain_chunking_report.json` & `langchain_chunking_preview.txt`: Official
+  token-aware chunking report (document counts, token distributions, overlaps).
+- `hybrid_retrieval_report.md`: Stage 2.4 retrieval evaluation and query tests.
+- `pdf_extraction_benchmark/`: Full benchmark report comparing Docling vs.
+  PyMuPDF on speed, memory, and structural fidelity.
+- `PROJECT_NOTES.txt`: This comprehensive reference document.
+
+2.11 Directory Breakdown: tests/
+--------------------------------
+Automated test suite (135 tests total across 11 test modules):
+- `conftest.py`: Shared pytest fixtures and test hooks.
+- `test_extract_papers.py`: Validates PyMuPDF extraction (8 tests).
+- `test_chunking.py`: Validates prototype chunking (14 tests).
+- `test_pdf_ingestion.py`: Validates LangChain document ingestion (11 tests).
+- `test_langchain_chunking.py`: Validates token-aware chunking (13 tests).
+- `test_dense_retriever.py`: Validates ChromaDB dense search (8 tests).
+- `test_bm25_retriever.py`: Validates BM25 keyword search (7 tests).
+- `test_fact_store.py`: Validates SQLite fact store (7 tests).
+- `test_hybrid_retriever.py`: Validates RRF fusion and channels (9 tests).
+- `test_groq_provider.py`: Validates Groq provider adapter (12 tests).
+- `test_simulator.py`: Validates FastAPI model simulator (18 tests).
+- `test_traffic_manager.py`: Validates async traffic manager (28 tests).
+
+2.12 Directory Breakdown: experiments/ and assistant_history/
+-------------------------------------------------------------
+- experiments/: Currently empty. Dedicated workspace reserved for upcoming
+  load-testing, traffic calibration, and retrieval quality experiments.
+- assistant_history/: Currently empty. Reserved for logging evaluation runs and
+  conversation trajectory records.
+
+================================================================================
+SECTION 3: WORK COMPLETED SO FAR (CHRONOLOGICAL STAGES)
+================================================================================
+
+3.1 Stage 1: Project Setup and Environment
+------------------------------------------
+Goal: Create a clean, reproducible, modern Python environment.
+- Configured Python 3.12.0 using Astral's `uv` package manager.
+- Initialized `pyproject.toml` with strict semantic dependencies.
+- Implemented environment isolation using `.venv`.
+- Established strict security rules: actual API keys are stored in a private
+  `.env` file (git-ignored), while `.env.example` provides safe placeholders.
+
+3.2 Stage 2.1: High-Fidelity PDF Extraction
+-------------------------------------------
+Goal: Extract text, structure, and tables from the three source PDFs.
+- Selected PyMuPDF (fitz) due to its remarkable speed (sub-second per paper)
+  and zero external C++ system dependencies.
+- Extracted 120 total pages across all 3 papers (15 + 66 + 39 pages).
+- Preserved 1-based page numbers, block coordinates, reading order, and tables.
+- Saved page-by-page JSON files in `data/extracted/` containing 376,127
+  extracted characters.
+- Verified zero empty pages and zero low-text errors.
+
+3.3 Stage 2.2: Chunking Strategy Prototype
+------------------------------------------
+Goal: Understand how splitting text affects retrieval quality.
+- What is Chunking? Large Language Models cannot ingest an entire 66-page paper
+  in a single retrieval query without high cost, latency, and "lost in the middle"
+  degradation. Chunking divides long text into small, self-contained paragraphs.
+- Evaluated three early prototypes:
+  1. Fixed-Size Chunking: Splits strictly by character count with a fixed overlap.
+     Limitation: Cuts words and sentences in half.
+  2. Sentence-Aware Chunking: Splits along sentence boundaries (`. `, `? `, `! `).
+     Limitation: Ignores headings and mixes unrelated sections.
+  3. Structure-Aware Chunking: Splits along detected headings.
+     Limitation: Headings vary wildly across paper formats and require specialized
+     token counting.
+- Key Learning: We needed a production-ready splitter that counts actual model
+  tokens (not characters) and preserves section metadata.
+
+3.4 Stage 2.2A: Docling vs. PyMuPDF Benchmark Evaluation
+--------------------------------------------------------
+Goal: Evaluate whether IBM's Docling deep-learning PDF parser produces superior
+results compared to PyMuPDF.
+- Setup: Created an isolated virtual environment (`.venv_docling`) and benchmarked
+  both tools on representative pages (tables, multi-column text, formulas).
+- Benchmark Findings:
+  * Speed: PyMuPDF processed the papers in ~0.5 seconds. Docling required
+    over 3 minutes (hundreds of times slower) due to heavy deep-learning models.
+  * Memory/Disk: Docling required gigabytes of PyTorch dependencies and heavy
+    RAM usage. PyMuPDF required only a few megabytes.
+  * Table Quality: While Docling extracted clean markdown tables, PyMuPDF's
+    built-in table extraction feature was also able to extract clean tabular
+    Markdown when configured properly.
+- Decision: We rejected Docling for the main pipeline to maintain a lightweight,
+  ultra-fast, CPU-friendly system. PyMuPDF was confirmed as the official extractor.
+
+3.5 Stage 2.3A: LangChain Dependency Setup
+------------------------------------------
+Goal: Add officially approved LangChain modular packages using `uv`.
+- Added:
+  * `langchain-core`: Base classes for Documents and Runnables.
+  * `langchain-text-splitters`: Text splitters including RecursiveCharacterTextSplitter.
+  * `langchain-huggingface`: Local Hugging Face embedding integrations.
+  * `langchain-chroma`: Modern ChromaDB vectorstore connector.
+  * `langchain-community`: Community utilities and document loaders.
+  * `rank-bm25`: BM25 probabilistic keyword algorithm.
+
+3.6 Stage 2.3B: LangChain PDF Ingestion and Token-Aware Chunking
+----------------------------------------------------------------
+Goal: Convert raw PDFs into production-grade token-bounded LangChain chunks.
+- Document Ingestion (`app/retrieval/pdf_ingestion.py`):
+  * Reads pages using PyMuPDF block dictionaries.
+  * Detects headings using font size and capitalization rules.
+  * Critical Fix: When a heading is encountered, the current prose group is
+    immediately flushed. The heading introduces a new section, ensuring prose
+    blocks never inherit the wrong section name across page boundaries.
+  * Tables are converted into verbatim Markdown tables with explicit page numbers.
+- Token-Aware Splitting (`app/retrieval/langchain_chunking.py`):
+  * Utilizes `RecursiveCharacterTextSplitter` configured with the Hugging Face
+    tokenizer for `sentence-transformers/all-MiniLM-L6-v2`.
+  * Chunk Size: 512 tokens maximum.
+  * Chunk Overlap: 76 tokens (~15% overlap) to prevent losing context across cuts.
+  * Output: Ingested 265 clean LangChain Documents and produced exactly 402
+    chunks across all three papers (50 + 203 + 149 chunks).
+  * Saved to `data/chunks/langchain_recursive/` and documented in
+    `reports/langchain_chunking_report.json`.
+
+3.7 Stage 2.4: Hybrid Multi-Modal Retrieval Engine
+--------------------------------------------------
+Goal: Implement an evidence-based retrieval engine combining three search channels.
+- Why Not Just Vector Search? Vector embeddings understand semantic similarity
+  (e.g., "fast dialogue" matches "real-time speech"), but they fail on exact
+  acronyms (e.g., "d_model"), specific version numbers, or numbers in tables.
+- Channel 1: Dense Vector Retrieval (`DenseRetriever`):
+  * Uses Sentence Transformers (`all-MiniLM-L6-v2`) generating 384-dimensional
+    dense vectors stored persistently in ChromaDB.
+  * Queries using cosine distance over semantic concepts.
+- Channel 2: Keyword Retrieval (`BM25Retriever`):
+  * Tokenizes chunks while preserving technical terms (e.g., `1706.03762v7`).
+  * Scores documents based on Term Frequency and Inverse Document Frequency (TF-IDF).
+- Channel 3: Structured Fact Store (`FactStore`):
+  * Stores tabular elements, formulas, and numeric metrics in SQLite (`fact_store.db`).
+  * Features SQLite FTS5 for full-text search and exact substring matching on numbers.
+- Reciprocal Rank Fusion (RRF):
+  * Combines ranked results from all three channels using the formula:
+    RRF_Score(d) = SUM_{channel} [ 1 / (60 + rank(d)) ]
+  * Chunks returned by multiple channels naturally float to the top.
+  * Returns complete provenance: paper title, arXiv ID, page number, section,
+    and exact chunk text.
+  * Channel failures are explicitly tracked and exposed in diagnostic metadata.
+
+3.8 Stage 3A: Real Groq Provider and Local Stand-in Model Simulator
+-------------------------------------------------------------------
+Goal: Provide swappable model backends behind a unified provider interface.
+- Common Interface (`app/providers/base.py`):
+  * `generate(request) -> GenerationResponse`
+  * `stream(request) -> AsyncIterator[StreamChunk]`
+- Real Groq Provider (`app/providers/groq_provider.py`):
+  * Connects to Groq Cloud API for ultra-fast LPU inference.
+  * Captures streaming token usage from trailing SDK chunks (`stream_options`).
+  * Correctly sets `time_to_first_token=None` for non-streaming calls.
+- Stand-in Model Simulator (`simulator/service.py` & `simulator/main.py`):
+  * A full local FastAPI server replicating an LLM provider on port 8001.
+  * Simulates network latency (base delay + random jitter).
+  * Local Rate Limiting: RPM (Requests Per Minute), TPM (Tokens Per Minute),
+    and daily request budgets using sliding 60-second windows.
+  * Conservative TPM Reservation: Reserves prompt tokens plus an output allowance
+    at admission to prevent concurrent requests from collectively breaching limits.
+  * Lifecycle Safety: Handles task cancellation (`asyncio.CancelledError`) and
+    early stream termination (`GeneratorExit`) without leaking reservations.
+
+3.9 Stage 3B: Asynchronous Traffic Manager and Concurrency Controller
+---------------------------------------------------------------------
+Goal: Protect model providers from traffic overload, burst spikes, and timeouts.
+- Bounded FIFO Queue: Requests enter a strictly ordered First-In, First-Out
+  queue. If queue depth exceeds `max_queue_size`, new requests are immediately
+  rejected with `QueueFullError` rather than consuming infinite memory.
+- Concurrency Control: Enforces a hard ceiling (`max_concurrency`) on the
+  number of simultaneous requests executing with the provider.
+- Local Rate Admission: Tracks RPM, TPM, and UTC daily request budgets.
+  Rejects excess requests with `LocalRateLimitError` (HTTP 429) carrying `retry_after`.
+- End-to-End Deadlines:
+  * Measures total time spent (queue wait time + provider execution time).
+  * If a request expires in the queue, it raises `QueueTimeoutError` and the
+    provider is **never called**.
+  * If a request expires during execution, it cancels the provider call and
+    raises `ExecutionTimeoutError`.
+- Centralized Bounded Retries:
+  * Automatically retries transient errors (500, 502, 503, 429, timeouts).
+  * Never retries non-transient errors (401 Unauthorized, 400 Invalid Request).
+  * Uses exponential backoff with random jitter or respects `retry_after`.
+  * Aborts retries if the backoff delay would exceed the request deadline.
+- Incremental Streaming & Non-Restart Rule:
+  * Yields chunks immediately as they arrive over HTTP.
+  * If an error occurs before any content text has been emitted (e.g. empty or
+    metadata chunk), the stream can be retried.
+  * Once non-empty text has been delivered to the user, transparent restarts are
+    strictly disabled (raises `StreamAlreadyStartedError`) to prevent duplicate text.
+- Cancellation-Safe Settlement:
+  * Implemented `_settle_request()` protected by task uncancel/cancel logic.
+  * Guarantees that cancellation while waiting for a lock cannot leak in-flight
+    slots or active token reservations.
+
+================================================================================
+SECTION 4: HOW THE COMPONENTS CONNECT (DATA FLOW & DIAGRAMS)
+================================================================================
+
+4.1 Implemented Component Architecture (ASCII Diagram)
+------------------------------------------------------
+The diagram below illustrates the exact components currently built and how data
+moves through them:
+
+```
++-----------------------------------------------------------------------------+
+|                             OFFLINE INGESTION PIPELINE                      |
++-----------------------------------------------------------------------------+
+|                                                                             |
+|   [ arXiv PDFs ]                                                            |
+|   - 1706.03762v7 (15 pages)                                                 |
+|   - 2410.00037v1 (66 pages)                                                 |
+|   - 2507.07955v2 (39 pages)                                                 |
+|         |                                                                   |
+|         v                                                                   |
+|   [ PyMuPDF Extraction ] (scripts/extract_papers.py)                        |
+|   - Page-by-page text, blocks, tables, fonts                                |
+|         |                                                                   |
+|         v                                                                   |
+|   [ LangChain Ingestion & Chunking ] (scripts/ingest_and_chunk_papers.py)    |
+|   - Heading-aware section grouping (app/retrieval/pdf_ingestion.py)         |
+|   - Token-aware RecursiveCharacterTextSplitter (512 tokens max, 76 overlap) |
+|   - Produces 402 verified chunks                                            |
+|         |                                                                   |
+|         +-----------------------+-----------------------+                   |
+|         |                       |                       |                   |
+|         v                       v                       v                   |
+|   [ ChromaDB Index ]      [ BM25 Index ]         [ Fact Store ]             |
+|   - all-MiniLM-L6-v2      - Term dictionary      - SQLite3 (fact_store.db)  |
+|   - 384-dim vectors       - ArXiv tokenization   - Markdown tables & stats  |
+|   - Cosine distance       - rank-bm25            - FTS5 full-text search    |
++---------+-----------------------+-----------------------+-------------------+
+          |                       |                       |
+          +-------------------+   |   +-------------------+
+                              |   |   |
++-----------------------------v---v---v---------------------------------------+
+|                          ONLINE HYBRID RETRIEVAL                            |
++-----------------------------------------------------------------------------+
+|                                                                             |
+|   User Query                                                                |
+|       |                                                                     |
+|       v                                                                     |
+|   [ Hybrid Retriever ] (app/retrieval/hybrid_retriever.py)                  |
+|   - Queries Dense (semantic), BM25 (keyword), and FactStore (tables)        |
+|   - Reciprocal Rank Fusion (RRF): RRF_Score = SUM[ 1 / (60 + rank) ]        |
+|   - Produces Top-K chunks with full source provenance (page, section, id)   |
+|                                                                             |
++-------------------------------------+---------------------------------------+
+                                      |
+                                      | (Planned Agent Connection:
+                                      |  NOT IMPLEMENTED YET)
+                                      v
++-----------------------------------------------------------------------------+
+|                     ASYNC TRAFFIC & INFERENCE LAYER                         |
++-----------------------------------------------------------------------------+
+|                                                                             |
+|   Generation Request (Prompt + Messages + Deadlines)                        |
+|       |                                                                     |
+|       v                                                                     |
+|   [ Traffic Manager ] (app/traffic/manager.py)                              |
+|   - Bounded FIFO Queue (max_queue_size)                                     |
+|   - Concurrency Limiter (max_concurrency in-flight)                         |
+|   - Rate Admission Controller (RPM, TPM, daily budget)                      |
+|   - Request Deadline Watchdog (Queue timeout vs. Execution timeout)         |
+|   - Bounded Exponential Retry Engine (jitter + Retry-After)                 |
+|   - Incremental Streaming Pass-Through (pre-content retries only)           |
+|       |                                                                     |
+|       +-----------------------------------+                                 |
+|       | (Swappable Provider Backend)      |                                 |
+|       v                                   v                                 |
+|   [ GroqProvider ]                [ SimulatorProvider ]                     |
+|   (app/providers/groq_provider)   (app/providers/simulator_provider)        |
+|   - Cloud Groq API                - Local FastAPI Server (:8001)            |
+|   - Fast LPU inference            - Simulates latency, jitter, RPM/TPM      |
+|                                                                             |
++-----------------------------------------------------------------------------+
+```
+
+4.2 Step-by-Step Data Flow
+--------------------------
+1. Offline Indexing:
+   - Source PDFs are read from `papers/` by PyMuPDF.
+   - Text, headings, and tables are converted to LangChain Documents.
+   - Token-aware chunking creates 402 chunks saved in `data/chunks/langchain_recursive/`.
+   - `build_retrieval_index.py` builds the vector index (`chroma.sqlite3`),
+     the keyword index (`bm25_index.json`), and the fact database (`fact_store.db`).
+2. Online Retrieval:
+   - A question arrives at `HybridRetriever`.
+   - The question is dispatched concurrently across Dense, BM25, and FactStore channels.
+   - Channel rankings are fused using RRF. Chunks supported by multiple channels
+     receive higher scores.
+3. Traffic Management & Generation:
+   - Application code formats a prompt with retrieved context and calls
+     `traffic_manager.execute(request)` or `traffic_manager.stream(request)`.
+   - TrafficManager verifies queue capacity. If full, it rejects immediately.
+   - Request waits in FIFO order until concurrency slot and rate limits permit admission.
+   - TrafficManager passes the request to the configured model provider (Groq or Simulator).
+   - If an error occurs, TrafficManager manages retries or cleanly rolls back reservations.
+
+4.3 Implemented vs. Pending Components
+--------------------------------------
+- Implemented:
+  * Full PDF extraction and token-aware chunking pipeline.
+  * Persistent ChromaDB, BM25, and SQLite fact store indexes.
+  * Multi-channel Hybrid Retriever with Reciprocal Rank Fusion.
+  * Groq Provider adapter and FastAPI Model Simulator.
+  * Async Traffic Manager with queuing, rate admission, deadlines, and streaming.
+- Pending (NOT IMPLEMENTED YET):
+  * Stage 3C: LangGraph multi-step reasoning workflow graph.
+  * End-to-end API tying the Hybrid Retriever directly to the Traffic Manager.
+  * Traffic calibration, load-testing experiments, and final CSV evaluation logs.
+
+================================================================================
+SECTION 5: IMPORTANT TECHNICAL DECISIONS & TRADE-OFFS
+================================================================================
+
+5.1 What We Chose and Why
+-------------------------
+1. Python 3.12 and FastAPI:
+   - Python is the standard language of modern AI/ML engineering.
+   - Python 3.12 provides improved asyncio exception groups, task cancellation
+     protections, and faster runtime execution.
+   - FastAPI provides high-speed, asynchronous HTTP handling with native Pydantic
+     validation for the model simulator.
+
+2. PyMuPDF Instead of Docling:
+   - PyMuPDF processes all three papers in ~0.5 seconds on CPU with virtually zero
+     disk overhead.
+   - Docling required 3+ minutes, gigabytes of deep-learning weights (PyTorch/Transformers),
+     and high RAM usage.
+   - PyMuPDF provided all the structural block coordinates and table extraction
+     needed without third-party heavy weight models.
+
+3. LangChain for Documents and Splitting:
+   - Provides standardized `Document(page_content, metadata)` representations.
+   - `RecursiveCharacterTextSplitter` respects natural text separators (`\n\n`, `\n`, ` `)
+     while adhering to exact token count ceilings.
+
+4. Sentence Transformers (`all-MiniLM-L6-v2`) for Local Embeddings:
+   - Runs locally on CPU in milliseconds.
+   - Generates compact 384-dimensional dense vectors.
+   - Eliminates dependence on external embedding APIs, costs, and rate limits.
+
+5. ChromaDB for Vector Storage:
+   - Runs in-process (embedded) without requiring Docker, external databases,
+     or cloud setup.
+   - Stores vectors and metadata persistently in SQLite.
+
+6. BM25 for Keyword Search:
+   - Essential for finding exact technical terms (e.g. `d_model`, `BLEU`, `RQ-Transformer`)
+     and arXiv version identifiers that dense vector embeddings blur together.
+
+7. SQLite with FTS5 for Structured Facts:
+   - Tables and formulas contain exact numerical data (e.g. "28.4 BLEU", "160ms latency").
+   - Storing raw markdown tables in SQLite enables exact substring lookups and
+     full-text searching without embedding distortion.
+
+8. Hybrid Retrieval with Reciprocal Rank Fusion (RRF):
+   - Rather than guessing arbitrary weight multipliers (e.g. 0.7 dense + 0.3 keyword),
+     RRF evaluates rank position across all active search channels.
+   - Chunks discovered by multiple retrieval methods naturally achieve the highest
+     relevance rank.
+
+9. Groq as the Real Model Provider:
+   - Groq LPUs provide extremely low inference latency (hundreds of tokens per second),
+     enabling fast real-time user experiences and quick automated evaluations.
+
+10. Stand-in FastAPI Simulator:
+    - Allows developing and testing the entire system offline without paying for
+      cloud API tokens or risking Groq account rate limits.
+    - Deterministically tests rate limiting (RPM/TPM), daily budget exhaustion,
+      and network errors.
+
+11. Asyncio-Based Traffic Management:
+    - Pure Python asynchronous concurrency control using queues, events, and locks.
+    - Zero external messaging broker dependencies.
+
+5.2 What We Deliberately Avoided
+--------------------------------
+- Avoided Heavy External Infrastructure: No Redis, Celery, RabbitMQ, Kafka, or
+  Postgres. Pure Python asyncio and SQLite provide lightweight, portable code
+  that runs on any developer laptop.
+- Avoided Cloud Embedding APIs: Using OpenAI or Cohere embedding APIs would introduce
+  network latency, cost, and additional rate limits during testing.
+- Avoided Docling in Production: Prevented adding gigabytes of PyTorch bloat and
+  multi-minute parsing delays to the extraction pipeline.
+
+================================================================================
+SECTION 6: TESTING AND VERIFICATION
+================================================================================
+
+6.1 Historical Milestone Test Results
+-------------------------------------
+Every stage in this project was accompanied by strict automated regression tests.
+Below are the historical test counts achieved at the conclusion of each stage:
+
+- Stage 2.1 (PDF Extraction):
+  * 8 tests passed in `tests/test_extract_papers.py`.
+- Stage 2.2 (Chunking Strategy Prototype):
+  * 14 tests passed in `tests/test_chunking.py` (22 total tests at that point).
+- Stage 2.3B (LangChain Ingestion and Token Chunking):
+  * 24 tests passed across `test_pdf_ingestion.py` and `test_langchain_chunking.py`
+    (46 total project tests at that point).
+- Stage 2.4 (Hybrid Retrieval Engine):
+  * 31 retrieval tests passed across `test_dense_retriever.py`, `test_bm25_retriever.py`,
+    `test_fact_store.py`, and `test_hybrid_retriever.py` (77 total project tests).
+- Stage 3A (Model Providers and Simulator):
+  * 30 provider and simulator tests passed across `test_groq_provider.py` and
+    `test_simulator.py` (107 total project tests).
+- Stage 3B (Async Traffic Manager):
+  * 28 traffic manager tests passed in `tests/test_traffic_manager.py`.
+  * Total project regression suite: **135 passed**, 0 failed.
+
+6.2 Current Test Suite Breakdown (135 Tests)
+--------------------------------------------
+Below is the exact distribution of the 135 passing tests in `tests/`:
+
+Test Module                     Count  Target Component
+--------------------------------------------------------------------------------
+tests/test_extract_papers.py       8   PyMuPDF extraction, JSON schemas, checksums
+tests/test_chunking.py            14   Prototype chunking limits, sentence splits
+tests/test_pdf_ingestion.py       11   LangChain document ingestion, tables, headers
+tests/test_langchain_chunking.py  13   Token-aware recursive splitting, overlap
+tests/test_dense_retriever.py      8   ChromaDB vector persistence, cosine queries
+tests/test_bm25_retriever.py       7   BM25 keyword search, arXiv ID tokenization
+tests/test_fact_store.py           7   SQLite fact store, table markdown, FTS5
+tests/test_hybrid_retriever.py     9   RRF fusion, channel diagnostics, provenance
+tests/test_groq_provider.py       12   Groq provider adapter, auth, streaming usage
+tests/test_simulator.py           18   FastAPI simulator, RPM/TPM, jitter, daily cap
+tests/test_traffic_manager.py     28   FIFO queue, deadlines, concurrency, retries
+--------------------------------------------------------------------------------
+TOTAL:                           135   135 PASSED (100% pass rate, 0 failures)
+
+6.3 Verification Commands
+-------------------------
+Run all traffic manager tests:
+  uv run pytest tests/test_traffic_manager.py -v
+
+Run all provider and simulator tests:
+  uv run pytest tests/test_groq_provider.py tests/test_simulator.py -v
+
+Run the complete 135-test regression suite:
+  uv run pytest -v
+
+================================================================================
+SECTION 7: CURRENT PROJECT STATUS
+================================================================================
+
+7.1 Status Matrix of All Stages
+-------------------------------
+Stage      Description                                         Status
+--------------------------------------------------------------------------------
+Stage 1    Project Setup, Environment, uv, Security            APPROVED & COMPLETE
+Stage 2.1  High-Fidelity PDF Extraction (PyMuPDF)              APPROVED & COMPLETE
+Stage 2.2  Chunking Strategy Prototype                         APPROVED & COMPLETE
+Stage 2.2A Docling vs. PyMuPDF Benchmark Evaluation            APPROVED & COMPLETE
+Stage 2.3A LangChain Modular Dependencies Installation         APPROVED & COMPLETE
+Stage 2.3B LangChain Ingestion & Token-Aware Chunking          APPROVED & COMPLETE
+Stage 2.4  Hybrid Retrieval Engine (Dense + BM25 + Facts)      APPROVED & COMPLETE
+Stage 3A   Real Groq Provider & FastAPI Model Simulator        APPROVED & COMPLETE
+Stage 3B   Async Traffic Manager & Concurrency Controller      APPROVED & COMPLETE
+Stage 3C   LangGraph Research Assistant Workflow               PENDING (NEXT STAGE)
+Stage 4    System Calibration, Load Experiments, Reports       PENDING
+--------------------------------------------------------------------------------
+
+7.2 What Has Been Approved vs. What Remains
+-------------------------------------------
+- Approved: Everything from raw PDF ingestion up through the asynchronous traffic
+  management layer is fully approved, tested, and passing regression checks.
+- Remains to be Done: Connecting the Hybrid Retriever and Traffic Manager inside
+  a stateful LangGraph reasoning agent (Stage 3C), running load experiments,
+  and compiling the final assignment submission report.
+
+================================================================================
+SECTION 8: IMPORTANT CONFIGURATION AND RUN COMMANDS
+================================================================================
+
+8.1 Virtual Environment and uv CLI Commands
+-------------------------------------------
+The project uses Astral's `uv` for lightning-fast package management on Windows.
+
+- Activate the virtual environment in PowerShell:
+  .venv\Scripts\Activate.ps1
+
+- Run any Python script using the project's virtual environment:
+  uv run python <script_path>
+
+- Check installed packages and verify dependency tree:
+  uv pip list
+  uv pip tree
+
+- Add a new dependency:
+  uv add <package_name>
+
+8.2 Running the Test Suite
+--------------------------
+- Run all tests with standard output:
+  uv run pytest
+
+- Run with detailed verbose output:
+  uv run pytest -v
+
+- Run a single test module:
+  uv run pytest tests/test_traffic_manager.py -v
+
+- Run a single specific test by function name:
+  uv run pytest tests/test_traffic_manager.py -k "test_fifo_execution_order" -v
+
+8.3 Running Extraction and Indexing Scripts
+-------------------------------------------
+- Extract raw text from papers:
+  uv run python scripts/extract_papers.py
+
+- Run official LangChain ingestion and token chunking:
+  uv run python scripts/ingest_and_chunk_papers.py
+
+- Build ChromaDB, BM25, and SQLite fact store indexes:
+  uv run python scripts/build_retrieval_index.py
+
+8.4 Running the Local Model Simulator
+-------------------------------------
+The model simulator runs as a standalone FastAPI service:
+- Start the simulator on port 8001 using Uvicorn:
+  uv run uvicorn simulator.main:app --host 127.0.0.1 --port 8001
+
+- Check simulator health:
+  curl http://127.0.0.1:8001/health
+
+- View live simulator rate limit and reservation status:
+  curl http://127.0.0.1:8001/status
+
+8.5 Environment Variables and Secret Hygiene
+--------------------------------------------
+- The `.env` file holds live credentials (such as `GROQ_API_KEY`).
+- `.env` is listed in `.gitignore` and is NEVER checked into source control.
+- Automated tests mock all remote APIs and DO NOT make real paid network calls.
+
+================================================================================
+SECTION 9: KNOWN LIMITATIONS AND OPERATIONAL ASSUMPTIONS
+================================================================================
+
+9.1 Known Limitations
+---------------------
+1. Local Admission vs. Remote Groq Limits:
+   The configured local RPM, TPM, and daily budget limits enforce local traffic
+   shaping and concurrency protection. They do not clone or communicate with
+   Groq's internal proprietary account tier counters.
+2. Ambiguous Network Retries:
+   If an HTTP connection drops after a request reaches the remote server but before
+   the response is received, retrying may cause duplicate execution on the provider.
+   Distributed systems cannot guarantee exactly-once delivery across broken connections.
+3. In-Memory Simulator State:
+   The FastAPI model simulator tracks active sliding-window reservations in memory.
+   Restarting the simulator server resets its live usage counters.
+4. CPU Embedding Speed:
+   Local embeddings (`all-MiniLM-L6-v2`) run on CPU. While extremely fast for
+   single queries (~20ms), generating thousands of embeddings during index
+   creation takes a few minutes.
+
+9.2 Operational Assumptions
+---------------------------
+1. Three Papers Only:
+   The system assumes questions are strictly answered from the three provided
+   arXiv papers. Out-of-domain general knowledge questions must be refused.
+2. Tokenizer Heuristic:
+   TrafficManager token admission estimates prompt tokens using an approximation
+   (~1.33 tokens per word). Actual token counts returned by the provider on
+   completion reconcile the reservation.
+
+9.3 Deprecation Warnings and Rules of Thumb
+-------------------------------------------
+- PyMuPDF Warning: You may see `FutureWarning: The fitz API is deprecated and
+  will be removed in future. Use import pymupdf instead.` This warning is harmless
+  and does not affect functionality.
+- Do Not Modify Chunking or Ingestion: The 402 generated chunks and their
+  corresponding ChromaDB, BM25, and SQLite indexes are approved artifacts.
+  Do not re-index or alter chunk IDs without an explicit architectural requirement.
+
+================================================================================
+SECTION 10: WHAT WE WILL BUILD NEXT
+================================================================================
+
+10.1 Stage 3C: LangGraph Research Assistant Workflow (PLANNED)
+--------------------------------------------------------------
+The immediate next stage is implementing the agentic reasoning loop using LangGraph:
+- State Management: Track conversation history, user questions, retrieved evidence,
+  reasoning steps, and generated responses with citations.
+- Tool Calling: The LangGraph agent will call `HybridRetriever` to gather context.
+- Citation Grounding: Verify that every factual assertion references a valid
+  paper ID, section, and page number from the retrieved chunks.
+- Refusal Node: Formulate polite refusals if a query cannot be answered from
+  the three approved research papers.
+- Routing to TrafficManager: Route all LLM generation nodes through the
+  `TrafficManager` so that agent workflows respect concurrency and rate limits.
+
+10.2 Subsequent Evaluation, Calibration, and Final Reporting (PLANNED)
+----------------------------------------------------------------------
+Following Stage 3C:
+- Real-Service Calibration: Calibrate RPM/TPM against the real Groq API.
+- Stand-in Load Testing: Stress-test the system with concurrent simulated clients
+  to observe queue behavior, backoff patterns, and error handling.
+- Retrieval Quality vs. Cost Experiments: Measure latency and accuracy across
+  Dense, BM25, FactStore, and fused RRF modes.
+- Results Logging & CSV Generation: Export experiment traces and metrics to CSV.
+- Final Two-Page Technical Write-Up: Summarize architecture, performance curves,
+  and engineering decisions for the final assignment submission.
+
+================================================================================
+END OF PROJECT NOTES
+================================================================================

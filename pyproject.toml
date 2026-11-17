@@ -1,0 +1,34 @@
+[project]
+name = "relay-assignment"
+version = "0.1.0"
+description = "The Relay - Research Assistant and Async Request Management"
+requires-python = ">=3.12"
+dependencies = [
+    "chromadb>=1.5.9",
+    "fastapi>=0.115.0",
+    "groq>=0.18.0",
+    "httpx>=0.27.0",
+    "langchain-chroma>=1.1.0",
+    "langchain-community>=0.4.2",
+    "langchain-core>=1.7.7",
+    "langchain-huggingface>=1.2.3",
+    "langchain-text-splitters>=1.1.3",
+    "langgraph>=1.2.20",
+    "matplotlib>=3.9.0",
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+    "psutil>=6.0.0",
+    "pydantic-settings>=2.4.0",
+    "pymupdf>=1.24.0",
+    "pytest>=8.0.0",
+    "python-dotenv>=1.0.0",
+    "rank-bm25>=0.2.2",
+    "scikit-learn>=1.5.0",
+    "sentence-transformers>=3.0.0",
+    "uvicorn[standard]>=0.30.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["submission", ".venv", "frontend", "backend", "node_modules"]
+

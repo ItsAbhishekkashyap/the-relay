@@ -1,0 +1,200 @@
+{
+  "execution_time_ms": 19.42,
+  "char_count": 2973,
+  "total_blocks": 18,
+  "text_block_count": 18,
+  "image_block_count": 0,
+  "span_count": 284,
+  "unique_fonts": [
+    "CMMI10",
+    "CMMI7",
+    "CMR10",
+    "CMR7",
+    "CMSY10",
+    "NimbusRomNo9L-Medi",
+    "NimbusRomNo9L-Regu"
+  ],
+  "raw_text_excerpt": "Table 3: Variations on the Transformer architecture. Unlisted values are identical to those of the base\nmodel. All metrics are on the English-to-German translation development set, newstest2013. Listed\nperplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to\nper-word perplexities.\nN\ndmodel\ndff\nh\ndk\ndv\nPdrop\nϵls\ntrain\nPPL\nBLEU\nparams\nsteps\n(dev)\n(dev)\n×106\nbase\n6\n512\n2048\n8\n64\n64\n0.1\n0.1\n100K\n4.92\n25.8\n65\n(A)\n1\n512\n512\n5.29\n24.9\n4\n128\n128\n5.00\n25.5\n16\n32\n",
+  "structured_blocks": [
+    {
+      "block_no": 0,
+      "bbox": [
+        107.69,
+        71.26,
+        504.0,
+        113.89
+      ],
+      "text": "Table 3: Variations on the Transformer architecture. Unlisted values are identical to those of the base\nmodel. All metrics are on the English-to-German translation development set, newstest2013. Listed\nperplexities are per-wordpiece, according to our byte-pair encoding, and should not be compared to\nper-word perplexities."
+    },
+    {
+      "block_no": 1,
+      "bbox": [
+        146.13,
+        131.48,
+        502.76,
+        152.83
+      ],
+      "text": "N\ndmodel\ndff\nh\ndk\ndv\nPdrop\nϵls\ntrain\nPPL\nBLEU\nparams\nsteps\n(dev)\n(dev)\n×106"
+    },
+    {
+      "block_no": 2,
+      "bbox": [
+        116.47,
+        155.5,
+        493.35,
+        165.47
+      ],
+      "text": "base\n6\n512\n2048\n8\n64\n64\n0.1\n0.1\n100K\n4.92\n25.8\n65"
+    },
+    {
+      "block_no": 3,
+      "bbox": [
+        118.41,
+        184.5,
+        132.23,
+        194.47
+      ],
+      "text": "(A)"
+    },
+    {
+      "block_no": 4,
+      "bbox": [
+        234.13,
+        168.14,
+        457.74,
+        210.83
+      ],
+      "text": "1\n512\n512\n5.29\n24.9\n4\n128\n128\n5.00\n25.5\n16\n32\n32\n4.91\n25.8\n32\n16\n16\n5.01\n25.4"
+    },
+    {
+      "block_no": 5,
+      "bbox": [
+        118.68,
+        213.5,
+        493.35,
+        234.38
+      ],
+      "text": "(B)\n16\n5.16\n25.1\n58\n32\n5.01\n25.4\n60"
+    },
+    {
+      "block_no": 6,
+      "bbox": [
+        118.68,
+        269.78,
+        131.96,
+        279.74
+      ],
+      "text": "(C)"
+    },
+    {
+      "block_no": 7,
+      "bbox": [
+        148.18,
+        237.05,
+        495.84,
+        312.47
+      ],
+      "text": "2\n6.11\n23.7\n36\n4\n5.19\n25.3\n50\n8\n4.88\n25.5\n80\n256\n32\n32\n5.75\n24.5\n28\n1024\n128\n128\n4.66\n26.0\n168\n1024\n5.12\n25.4\n53\n4096\n4.75\n26.2\n90"
+    },
+    {
+      "block_no": 8,
+      "bbox": [
+        118.41,
+        331.51,
+        132.23,
+        341.47
+      ],
+      "text": "(D)"
+    },
+    {
+      "block_no": 9,
+      "bbox": [
+        118.95,
+        315.14,
+        495.85,
+        383.11
+      ],
+      "text": "0.0\n5.77\n24.6\n0.2\n4.95\n25.5\n0.0\n4.67\n25.3\n0.2\n5.47\n25.7\n(E)\npositional embedding instead of sinusoids\n4.92\n25.7\nbig\n6\n1024\n4096\n16\n0.3\n300K\n4.33\n26.4\n213"
+    },
+    {
+      "block_no": 10,
+      "bbox": [
+        108.0,
+        413.68,
+        504.0,
+        434.62
+      ],
+      "text": "development set, newstest2013. We used beam search as described in the previous section, but no\ncheckpoint averaging. We present these results in Table 3."
+    },
+    {
+      "block_no": 11,
+      "bbox": [
+        108.0,
+        441.12,
+        505.24,
+        472.83
+      ],
+      "text": "In Table 3 rows (A), we vary the number of attention heads and the attention key and value dimensions,\nkeeping the amount of computation constant, as described in Section 3.2.2. While single-head\nattention is 0.9 BLEU worse than the best setting, quality also drops off with too many heads."
+    },
+    {
+      "block_no": 12,
+      "bbox": [
+        108.0,
+        479.02,
+        505.24,
+        543.76
+      ],
+      "text": "In Table 3 rows (B), we observe that reducing the attention key size dk hurts model quality. This\nsuggests that determining compatibility is not easy and that a more sophisticated compatibility\nfunction than dot product may be beneficial. We further observe in rows (C) and (D) that, as expected,\nbigger models are better, and dropout is very helpful in avoiding over-fitting. In row (E) we replace our\nsinusoidal positional encoding with learned positional embeddings [9], and observe nearly identical\nresults to the base model."
+    },
+    {
+      "block_no": 13,
+      "bbox": [
+        108.0,
+        560.49,
+        255.97,
+        570.45
+      ],
+      "text": "6.3\nEnglish Constituency Parsing"
+    },
+    {
+      "block_no": 14,
+      "bbox": [
+        107.69,
+        581.43,
+        504.0,
+        624.18
+      ],
+      "text": "To evaluate if the Transformer can generalize to other tasks we performed experiments on English\nconstituency parsing. This task presents specific challenges: the output is subject to strong structural\nconstraints and is significantly longer than the input. Furthermore, RNN sequence-to-sequence\nmodels have not been able to attain state-of-the-art results in small-data regimes [37]."
+    },
+    {
+      "block_no": 15,
+      "bbox": [
+        107.53,
+        630.37,
+        505.24,
+        684.2
+      ],
+      "text": "We trained a 4-layer transformer with dmodel = 1024 on the Wall Street Journal (WSJ) portion of the\nPenn Treebank [25], about 40K training sentences. We also trained it in a semi-supervised setting,\nusing the larger high-confidence and BerkleyParser corpora from with approximately 17M sentences\n[37]. We used a vocabulary of 16K tokens for the WSJ only setting and a vocabulary of 32K tokens\nfor the semi-supervised setting."
+    },
+    {
+      "block_no": 16,
+      "bbox": [
+        107.53,
+        690.64,
+        504.0,
+        722.43
+      ],
+      "text": "We performed only a small number of experiments to select the dropout, both attention and residual\n(section 5.4), learning rates and beam size on the Section 22 development set, all other parameters\nremained unchanged from the English-to-German base translation model. During inference, we"
+    },
+    {
+      "block_no": 17,
+      "bbox": [
+        303.51,
+        742.33,
+        308.49,
+        752.3
+      ],
+      "text": "9"
+    }
+  ]
+}

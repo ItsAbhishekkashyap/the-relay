@@ -1,0 +1,512 @@
+"""
+Generate manually verified 32-question evaluation dataset for Stage 6 retrieval evaluation.
+"""
+
+import json
+from pathlib import Path
+
+QUESTIONS = [
+    # =========================================================================
+    # PAPER 1: 1706.03762v7 - Attention Is All You Need (9 questions)
+    # =========================================================================
+    {
+        "question_id": "q01_vaswani_scaling_factor",
+        "question": "Why does the Transformer scale the dot products by 1/sqrt(d_k) in the Scaled Dot-Product Attention mechanism?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "For large values of d_k, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients. Dividing by sqrt(d_k) counteracts this effect.",
+        "expected_citations": ["[Attention Is All You Need, arXiv:1706.03762v7, p. 4, Section 3.2.1]"],
+        "expected_pages": [4, 5],
+        "expected_sections": ["3.2.1 Scaled Dot-Product Attention"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0009", "1706.03762v7_lc_0010"],
+        "answerable": True,
+        "question_type": "conceptual",
+        "notes": "Conceptual explanation of dot-product magnitude and softmax gradient vanishing."
+    },
+    {
+        "question_id": "q02_vaswani_masked_attention",
+        "question": "What exact term does the paper use for the decoder self-attention mechanism that prevents positions from attending to subsequent positions?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "Masked Multi-Head Attention (or masked multi-head self-attention).",
+        "expected_citations": ["[Attention Is All You Need, arXiv:1706.03762v7, p. 3, Section 3.1]"],
+        "expected_pages": [3, 4],
+        "expected_sections": ["3.1 Encoder and Decoder Stacks"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0007"],
+        "answerable": True,
+        "question_type": "exact_terminology",
+        "notes": "Exact terminology for decoder autoregressive self-attention mask."
+    },
+    {
+        "question_id": "q03_vaswani_base_hyperparams",
+        "question": "What are the exact values of d_model, N (layers), h (attention heads), and d_ff for the base Transformer model?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "For the base Transformer model: d_model = 512, N = 6, h = 8, and d_ff = 2048.",
+        "expected_citations": [
+            "[Attention Is All You Need, arXiv:1706.03762v7, p. 3, Section 3.1]",
+            "[Attention Is All You Need, arXiv:1706.03762v7, p. 9, Section 6.2]"
+        ],
+        "expected_pages": [3, 5, 9],
+        "expected_sections": ["3.1 Encoder and Decoder Stacks", "3.3 Position-wise Feed-Forward Networks", "6.2 Model Variations"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0006", "1706.03762v7_lc_0013", "1706.03762v7_lc_0033"],
+        "answerable": True,
+        "question_type": "numerical_factual",
+        "notes": "Base architecture dimensional parameters."
+    },
+    {
+        "question_id": "q04_vaswani_encoder_layer_arch",
+        "question": "Describe the architecture of a single encoder layer in the Transformer, including sub-layers and connection types.",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "Each encoder layer consists of two sub-layers: a multi-head self-attention mechanism and a position-wise fully connected feed-forward network. A residual connection is employed around each sub-layer, followed by layer normalization (LayerNorm(x + Sublayer(x))).",
+        "expected_citations": ["[Attention Is All You Need, arXiv:1706.03762v7, p. 3, Section 3.1]"],
+        "expected_pages": [3],
+        "expected_sections": ["3.1 Encoder and Decoder Stacks"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0006"],
+        "answerable": True,
+        "question_type": "architectural",
+        "notes": "Sub-layer structure, residual connection, and LayerNorm in encoder."
+    },
+    {
+        "question_id": "q05_vaswani_table1_complexity",
+        "question": "According to Table 1, what is the per-layer computational complexity, sequential operations, and maximum path length for Self-Attention?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "For Self-Attention, per-layer complexity is O(n^2 * d), sequential operations is O(1), and maximum path length is O(1).",
+        "expected_citations": ["[Attention Is All You Need, arXiv:1706.03762v7, p. 6, Section 3.4 Embeddings and Softmax]"],
+        "expected_pages": [6],
+        "expected_sections": ["3.4 Embeddings and Softmax", "4 Why Self-Attention"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0015", "1706.03762v7_lc_0016"],
+        "answerable": True,
+        "question_type": "tabular_structured",
+        "notes": "Table 1 complexity row for Self-Attention."
+    },
+    {
+        "question_id": "q06_vaswani_table2_bleu",
+        "question": "In Table 2, what BLEU scores did the Transformer (big) achieve on the WMT 2014 English-to-German and English-to-French translation tasks?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "The Transformer (big) achieved a BLEU score of 28.4 on WMT 2014 English-to-German (EN-DE) and 41.8 on English-to-French (EN-FR) (or 41.0 on dev).",
+        "expected_citations": [
+            "[Attention Is All You Need, arXiv:1706.03762v7, p. 8, Section 5.4 Regularization]",
+            "[Attention Is All You Need, arXiv:1706.03762v7, p. 8, Section 6.1 Machine Translation]"
+        ],
+        "expected_pages": [8],
+        "expected_sections": ["5.4 Regularization", "6.1 Machine Translation"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0026", "1706.03762v7_lc_0029"],
+        "answerable": True,
+        "question_type": "tabular_structured",
+        "notes": "Table 2 benchmark translation BLEU scores."
+    },
+    {
+        "question_id": "q07_vaswani_positional_encoding_comparison",
+        "question": "How are positional encodings formulated in the Transformer, and how did learned positional embeddings compare to sinusoidal encodings in Table 3?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "Positional encodings use sine and cosine functions of different frequencies (PE(pos, 2i) = sin(pos/10000^(2i/d_model)) and PE(pos, 2i+1) = cos(pos/10000^(2i/d_model))). In Table 3 row (E), learned positional embeddings produced nearly identical results to sinusoids (PPL 4.92, BLEU 25.7), but sinusoids allow the model to extrapolate to sequence lengths longer than encountered during training.",
+        "expected_citations": [
+            "[Attention Is All You Need, arXiv:1706.03762v7, p. 6, Section 3.5 Positional Encoding]",
+            "[Attention Is All You Need, arXiv:1706.03762v7, p. 9, Section 6.2 Model Variations]"
+        ],
+        "expected_pages": [6, 9],
+        "expected_sections": ["3.5 Positional Encoding", "6.2 Model Variations"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0017", "1706.03762v7_lc_0033", "1706.03762v7_lc_0034"],
+        "answerable": True,
+        "question_type": "multi_passage",
+        "notes": "Synthesizes Section 3.5 mathematical formulation with Section 6.2 Table 3 experimental comparison."
+    },
+    {
+        "question_id": "q08_vaswani_warmup_learning_rate",
+        "question": "What formula was used for the learning rate schedule during training, and how many warmup steps were used?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "The learning rate schedule followed: lrate = d_model^(-0.5) * min(step_num^(-0.5), step_num * warmup_steps^(-1.5)), with warmup_steps = 4000.",
+        "expected_citations": ["[Attention Is All You Need, arXiv:1706.03762v7, p. 7, Section 5.3 Optimizer]"],
+        "expected_pages": [7, 8],
+        "expected_sections": ["5.3 Optimizer"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0023"],
+        "answerable": True,
+        "question_type": "numerical_factual",
+        "notes": "Optimizer learning rate schedule formula and warmup step count."
+    },
+    {
+        "question_id": "q09_vaswani_label_smoothing",
+        "question": "What value of label smoothing was applied during training, and what trade-off did it introduce between perplexity and BLEU?",
+        "paper_id": "1706.03762v7",
+        "expected_answer": "Label smoothing of epsilon_ls = 0.1 was used. This hurts perplexity because the model learns to be more unsure, but improves accuracy and BLEU score.",
+        "expected_citations": ["[Attention Is All You Need, arXiv:1706.03762v7, p. 8, Section 5.4 Regularization]"],
+        "expected_pages": [8],
+        "expected_sections": ["5.4 Regularization"],
+        "expected_chunk_ids": ["1706.03762v7_lc_0025"],
+        "answerable": True,
+        "question_type": "conceptual",
+        "notes": "Label smoothing parameter and perplexity vs BLEU trade-off."
+    },
+
+    # =========================================================================
+    # PAPER 2: 2410.00037v1 - Moshi: Speech-Text Foundation Model (9 questions)
+    # =========================================================================
+    {
+        "question_id": "q10_moshi_codec_and_backbone_names",
+        "question": "What is the name of the neural audio codec used by Moshi, and what is the underlying 7B text language model called?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "Moshi uses the Mimi neural audio codec and is built on top of Helium, a 7B-parameter text language model.",
+        "expected_citations": [
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 6, Section 2 Related Work]",
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 7, Section 3.1 Overview]"
+        ],
+        "expected_pages": [6, 7],
+        "expected_sections": ["2 Related Work", "3.1 Overview"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0013", "2410.00037v1_lc_0016"],
+        "answerable": True,
+        "question_type": "exact_terminology",
+        "notes": "Identifies Mimi and Helium system component names."
+    },
+    {
+        "question_id": "q11_moshi_full_duplex_concept",
+        "question": "How does Moshi achieve full-duplex spoken conversation without separate turn-taking heuristics or cascading pipelines?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "Moshi models full-duplex interaction by processing and generating multiple parallel audio and text streams concurrently (user audio stream and Moshi audio/text stream) using a single autoregressive transformer, allowing it to listen and speak simultaneously without turn-taking cascades.",
+        "expected_citations": [
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 3, Section 1 Introduction]",
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 7, Section 3.1 Overview]"
+        ],
+        "expected_pages": [3, 7],
+        "expected_sections": ["1 Introduction", "3.1 Overview"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0004", "2410.00037v1_lc_0016"],
+        "answerable": True,
+        "question_type": "conceptual",
+        "notes": "Conceptual multi-stream joint modeling vs cascading ASR-LLM-TTS."
+    },
+    {
+        "question_id": "q12_moshi_temporal_depth_transformer",
+        "question": "Describe the roles and division of labor between the Temporal Transformer and the Depth Transformer in Moshi.",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "The Temporal Transformer (Helium backbone) models temporal dependencies across time frames for the concatenated audio and text streams. The Depth Transformer autoregressively predicts the hierarchical multi-codebook RVQ audio tokens across depth levels within each time frame.",
+        "expected_citations": [
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 7, Section 3.1 Overview]",
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 13, Section 3.4.1 Hierarchical autoregressive modeling with RQ-Transformer]"
+        ],
+        "expected_pages": [7, 13],
+        "expected_sections": ["3.1 Overview", "3.4.1 Hierarchical autoregressive modeling with RQ-Transformer"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0016", "2410.00037v1_lc_0035"],
+        "answerable": True,
+        "question_type": "architectural",
+        "notes": "Temporal vs Depth Transformer separation in RQ-Transformer."
+    },
+    {
+        "question_id": "q13_moshi_latency_numbers",
+        "question": "What theoretical and empirical latencies does Moshi achieve for real-time speech generation?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "Moshi achieves a theoretical latency of 160 ms (frame size of 80 ms plus 80 ms acoustic delay/lookahead) and an empirical end-to-end latency of approximately 200 ms on an L4 GPU.",
+        "expected_citations": [
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 3, Section 1 Introduction]",
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 7, Section 3.1 Overview]"
+        ],
+        "expected_pages": [3, 7],
+        "expected_sections": ["1 Introduction", "3.1 Overview"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0004", "2410.00037v1_lc_0016"],
+        "answerable": True,
+        "question_type": "numerical_factual",
+        "notes": "160ms theoretical and 200ms empirical latency figures."
+    },
+    {
+        "question_id": "q14_moshi_table1_hyperparameters",
+        "question": "In Table 1 of the Moshi paper, what are the training steps, batch size, and learning rate schedule for Helium pre-training?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "In Table 1, Helium pre-training uses 500k training steps, a batch size of approximately 4M tokens, a cosine learning rate schedule with a peak learning rate of 3e-4, and 2000 warmup steps.",
+        "expected_citations": ["[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 8, Section 3.2.2 Pre-training data filtering]"],
+        "expected_pages": [8],
+        "expected_sections": ["3.2.2 Pre-training data filtering"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0020", "2410.00037v1_lc_0021", "2410.00037v1_lc_0022"],
+        "answerable": True,
+        "question_type": "tabular_structured",
+        "notes": "Table 1 hyperparameter values for Helium pre-training."
+    },
+    {
+        "question_id": "q15_moshi_table2_benchmarks",
+        "question": "In Table 2, what zero-shot evaluation scores did Helium 7B achieve on MMLU, ARC-Easy (ARCe), and ARC-Challenge (ARCc)?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "In Table 2, Helium 7B achieved an MMLU score of 50.8, an ARC-Easy (ARCe) score of 79.1, and an ARC-Challenge (ARCc) score of 50.0.",
+        "expected_citations": ["[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 22, Section 5.1 Text Language Modeling]"],
+        "expected_pages": [22],
+        "expected_sections": ["5.1 Text Language Modeling"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0060", "2410.00037v1_lc_0061"],
+        "answerable": True,
+        "question_type": "tabular_structured",
+        "notes": "Table 2 text language model benchmark results."
+    },
+    {
+        "question_id": "q16_moshi_inner_monologue",
+        "question": "What is the 'Inner Monologue' mechanism in Moshi and what specific text prefix token does it use?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "Inner Monologue predicts text tokens corresponding to Moshi's own speech slightly before generating the audio tokens (using a small acoustic delay), stabilizing and guiding speech generation through language modeling. It uses a dedicated text token stream.",
+        "expected_citations": [
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 7, Section 3.1 Overview]",
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 11, Section 3.3 Audio Language Modeling]"
+        ],
+        "expected_pages": [7, 11],
+        "expected_sections": ["3.1 Overview", "3.3 Audio Language Modeling"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0016", "2410.00037v1_lc_0028"],
+        "answerable": True,
+        "question_type": "conceptual",
+        "notes": "Inner monologue explanation and acoustic delay mechanism."
+    },
+    {
+        "question_id": "q17_moshi_acoustic_delay_multi_passage",
+        "question": "How does acoustic delay synchronize text and audio tokens in Moshi, and what value is chosen in Table 1?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "Moshi delays audio token generation relative to text tokens so that the model generates text before the corresponding audio is synthesized. According to Table 1, an acoustic delay of 2 frames (corresponding to 160 ms or 2 steps of 12.5 Hz Mimi codec tokens) is used during Moshi training.",
+        "expected_citations": [
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 8, Section 3.2.2 Pre-training data filtering]",
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 12, Section 3.3 Audio Language Modeling]"
+        ],
+        "expected_pages": [8, 12],
+        "expected_sections": ["3.2.2 Pre-training data filtering", "3.3 Audio Language Modeling"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0021", "2410.00037v1_lc_0022", "2410.00037v1_lc_0032"],
+        "answerable": True,
+        "question_type": "multi_passage",
+        "notes": "Synthesizes Table 1 acoustic delay parameter (2 frames) with Section 3.3 modeling motivation."
+    },
+    {
+        "question_id": "q18_moshi_mimi_framerate",
+        "question": "What is the frame rate of the Mimi audio codec, and how many codebooks does it use?",
+        "paper_id": "2410.00037v1",
+        "expected_answer": "Mimi operates at a frame rate of 12.5 Hz (yielding an 80 ms frame step) and uses 8 codebooks for Moshi's generative modeling (or up to 32 codebooks in the full Mimi codec).",
+        "expected_citations": [
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 7, Section 3.1 Overview]",
+            "[Moshi: A Speech-Text Foundation Model for Real-Time Dialogue, arXiv:2410.00037v1, p. 10, Section 3.3 Audio Language Modeling]"
+        ],
+        "expected_pages": [7, 10],
+        "expected_sections": ["3.1 Overview", "3.3 Audio Language Modeling"],
+        "expected_chunk_ids": ["2410.00037v1_lc_0016", "2410.00037v1_lc_0026"],
+        "answerable": True,
+        "question_type": "numerical_factual",
+        "notes": "12.5 Hz frame rate and 8 codebooks in generative RVQ."
+    },
+
+    # =========================================================================
+    # PAPER 3: 2507.07955v2 - Dynamic Chunking (8 questions)
+    # =========================================================================
+    {
+        "question_id": "q19_dc_concept_motivation",
+        "question": "What is the core conceptual motivation of Dynamic Chunking compared to static or space-based chunking in hierarchical sequence modeling?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "Static chunking creates uniform fixed-length boundaries that split semantic units arbitrarily, while space-based chunking fails on non-spaced languages (like Chinese) or continuous modalities (like audio/code). Dynamic Chunking learns to dynamically predict semantic boundaries based on sequence content in an end-to-end trainable manner without fixed heuristics.",
+        "expected_citations": [
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 1, Section Abstract]",
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 2, Section 1 Introduction]"
+        ],
+        "expected_pages": [1, 2],
+        "expected_sections": ["Abstract", "1 Introduction"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0001", "2507.07955v2_lc_0003"],
+        "answerable": True,
+        "question_type": "conceptual",
+        "notes": "Conceptual explanation of dynamic boundary learning vs static/heuristic chunking."
+    },
+    {
+        "question_id": "q20_dc_hnet_architecture",
+        "question": "What is the high-level architecture of H-Net, and what are its main structural components?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "H-Net consists of an encoder network (E0) that maps raw input tokens/bytes to representations, a dynamic chunk boundary predictor (router) that aggregates representations into chunks, a main backbone network (M) processing coarsened chunk representations at Level 1, and a decoder network (D0) that upsamples and reconstructs the fine sequence.",
+        "expected_citations": [
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 2, Section 1 Introduction]",
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 4, Section 2 Method]"
+        ],
+        "expected_pages": [2, 4, 5],
+        "expected_sections": ["1 Introduction", "2 Method"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0004", "2507.07955v2_lc_0008"],
+        "answerable": True,
+        "question_type": "architectural",
+        "notes": "Encoder, router/chunker, main backbone, and decoder hierarchy."
+    },
+    {
+        "question_id": "q21_dc_bpic_terminology",
+        "question": "What does the abbreviation BPIC stand for in the Dynamic Chunking paper, and how is it defined?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "BPIC stands for Bytes Per Inferred Chunk (defined as L_S / L_0, the ratio of raw sequence length to coarsened chunk sequence length, representing the compression ratio).",
+        "expected_citations": ["[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 11, Section 3 Experiments]"],
+        "expected_pages": [11],
+        "expected_sections": ["3 Experiments"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0029", "2507.07955v2_lc_0030"],
+        "answerable": True,
+        "question_type": "exact_terminology",
+        "notes": "Exact terminology and definition of BPIC."
+    },
+    {
+        "question_id": "q22_dc_table1_hnet_2stage",
+        "question": "In Table 1, what are the tokenizer, BPIC, and parameter count of the H-Net (2-stage) model with (3,3)-DC?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "In Table 1, H-Net (2-stage) with (3,3)-DC uses byte input, achieves a BPIC of 7.0, and has 870M parameters.",
+        "expected_citations": ["[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 11, Section 3 Experiments]"],
+        "expected_pages": [11],
+        "expected_sections": ["3 Experiments"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0029", "2507.07955v2_lc_0032"],
+        "answerable": True,
+        "question_type": "tabular_structured",
+        "notes": "Table 1 architecture specifications for H-Net 2-stage."
+    },
+    {
+        "question_id": "q23_dc_table2_fineweb_bpb",
+        "question": "According to Table 2, what bits-per-byte (bpb) on FineWeb-Edu (F-Edu) does the H-Net (2-stage) achieve compared to SpaceByte?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "In Table 2, H-Net (2-stage) achieves 0.771 bpb on FineWeb-Edu, outperforming SpaceByte which achieves 0.791 bpb (lower is better).",
+        "expected_citations": ["[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 13, Section 3.1 Language Modeling]"],
+        "expected_pages": [13],
+        "expected_sections": ["3.1 Language Modeling"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0040", "2507.07955v2_lc_0041", "2507.07955v2_lc_0042"],
+        "answerable": True,
+        "question_type": "tabular_structured",
+        "notes": "Table 2 benchmark comparison of bits-per-byte on FineWeb-Edu."
+    },
+    {
+        "question_id": "q24_dc_autoregressive_causality",
+        "question": "How does Dynamic Chunking preserve strict causality during autoregressive inference without looking ahead into future bytes?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "Dynamic Chunking computes chunk boundary decisions strictly based on past and current representations using causal convolutions or causal attention, ensuring that no future tokens or lookahead features influence the boundary scores at time t.",
+        "expected_citations": [
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 9, Section 2.4 Autoregressive Training and Inference]",
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 5, Section 2.1 Chunking Principles]"
+        ],
+        "expected_pages": [5, 9],
+        "expected_sections": ["2.4 Autoregressive Training and Inference", "2.1 Chunking Principles"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0012", "2507.07955v2_lc_0025"],
+        "answerable": True,
+        "question_type": "architectural",
+        "notes": "Causal guarantee and autoregressive streaming operation."
+    },
+    {
+        "question_id": "q25_dc_comparison_mambabyte_spacebyte",
+        "question": "How does Dynamic Chunking compare to MambaByte and SpaceByte across FLOP efficiency and byte-level compression?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "MambaByte operates directly on bytes with no downsampling (BPIC 1.0, 190M params), requiring high compute per sequence length. SpaceByte uses fixed space-delimiter heuristics (BPIC ~6.0) which fail on non-space languages. Dynamic Chunking achieves higher compression (BPIC 7.0 for 2-stage) and better bpb (0.771 vs 0.791) while being fully end-to-end learned.",
+        "expected_citations": [
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 11, Section 3 Experiments]",
+            "[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 13, Section 3.1 Language Modeling]"
+        ],
+        "expected_pages": [11, 13],
+        "expected_sections": ["3 Experiments", "3.1 Language Modeling"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0029", "2507.07955v2_lc_0031", "2507.07955v2_lc_0040", "2507.07955v2_lc_0042"],
+        "answerable": True,
+        "question_type": "multi_passage",
+        "notes": "Multi-passage comparison across architectural design and benchmark performance."
+    },
+    {
+        "question_id": "q26_dc_compression_ratio_definition",
+        "question": "What mathematical formula defines the compression ratio L_S / L_0 in Dynamic Chunking?",
+        "paper_id": "2507.07955v2",
+        "expected_answer": "The compression ratio is defined as the original sequence length L_0 divided by the coarsened sequence length L_S (or L_S / L_0 representing coarsening factor / BPIC).",
+        "expected_citations": ["[Dynamic Chunking for End-to-End Hierarchical Sequence Modeling, arXiv:2507.07955v2, p. 11, Section 3 Experiments]"],
+        "expected_pages": [11],
+        "expected_sections": ["3 Experiments"],
+        "expected_chunk_ids": ["2507.07955v2_lc_0029", "2507.07955v2_lc_0030"],
+        "answerable": True,
+        "question_type": "numerical_factual",
+        "notes": "Definition of compression ratio and chunk length reduction."
+    },
+
+    # =========================================================================
+    # OUT-OF-DOMAIN / UNANSWERABLE QUESTIONS (6 questions - MUST REFUSE)
+    # =========================================================================
+    {
+        "question_id": "q27_refusal_llama3_arch",
+        "question": "What is the context window length and attention head configuration of the LLaMA-3 70B model?",
+        "paper_id": None,
+        "expected_answer": "I am unable to answer this research question from the three target papers. Reason: No relevant evidence passages were found in the 3 target papers.",
+        "expected_citations": [],
+        "expected_pages": [],
+        "expected_sections": [],
+        "expected_chunk_ids": [],
+        "answerable": False,
+        "question_type": "refusal_out_of_domain",
+        "notes": "LLaMA-3 is outside the 3-paper corpus (Vaswani 2017, Moshi 2024, Dynamic Chunking 2025)."
+    },
+    {
+        "question_id": "q28_refusal_bert_pretraining",
+        "question": "How does BERT use Masked Language Modeling (MLM) and Next Sentence Prediction (NSP) during pre-training?",
+        "paper_id": None,
+        "expected_answer": "I am unable to answer this research question from the three target papers. Reason: No relevant evidence passages were found in the 3 target papers.",
+        "expected_citations": [],
+        "expected_pages": [],
+        "expected_sections": [],
+        "expected_chunk_ids": [],
+        "answerable": False,
+        "question_type": "refusal_out_of_domain",
+        "notes": "BERT (Devlin et al., 2018) is out of domain."
+    },
+    {
+        "question_id": "q29_refusal_ddpm_diffusion",
+        "question": "How do Denoising Diffusion Probabilistic Models (DDPM) compute reverse Markov chain transitions for image synthesis?",
+        "paper_id": None,
+        "expected_answer": "I am unable to answer this research question from the three target papers. Reason: No relevant evidence passages were found in the 3 target papers.",
+        "expected_citations": [],
+        "expected_pages": [],
+        "expected_sections": [],
+        "expected_chunk_ids": [],
+        "answerable": False,
+        "question_type": "refusal_out_of_domain",
+        "notes": "Diffusion models for image synthesis are completely out of domain."
+    },
+    {
+        "question_id": "q30_refusal_flashattention_tiling",
+        "question": "How does FlashAttention utilize GPU SRAM tiling and online softmax rescaling to achieve IO-awareness?",
+        "paper_id": None,
+        "expected_answer": "I am unable to answer this research question from the three target papers. Reason: No relevant evidence passages were found in the 3 target papers.",
+        "expected_citations": [],
+        "expected_pages": [],
+        "expected_sections": [],
+        "expected_chunk_ids": [],
+        "answerable": False,
+        "question_type": "refusal_out_of_domain",
+        "notes": "FlashAttention (Dao et al., 2022) is not among the 3 assigned papers."
+    },
+    {
+        "question_id": "q31_refusal_deepseek_r1",
+        "question": "What reinforcement learning reward signals does DeepSeek-R1 use for reasoning distillation?",
+        "paper_id": None,
+        "expected_answer": "I am unable to answer this research question from the three target papers. Reason: No relevant evidence passages were found in the 3 target papers.",
+        "expected_citations": [],
+        "expected_pages": [],
+        "expected_sections": [],
+        "expected_chunk_ids": [],
+        "answerable": False,
+        "question_type": "refusal_out_of_domain",
+        "notes": "DeepSeek-R1 is out of domain."
+    },
+    {
+        "question_id": "q32_refusal_alphafold_protein",
+        "question": "How does AlphaFold utilize evoformer blocks and multiple sequence alignments (MSAs) to predict 3D protein structures?",
+        "paper_id": None,
+        "expected_answer": "I am unable to answer this research question from the three target papers. Reason: No relevant evidence passages were found in the 3 target papers.",
+        "expected_citations": [],
+        "expected_pages": [],
+        "expected_sections": [],
+        "expected_chunk_ids": [],
+        "answerable": False,
+        "question_type": "refusal_out_of_domain",
+        "notes": "AlphaFold structural biology is out of domain."
+    }
+]
+
+def main():
+    out_dir = Path("experiments/retrieval")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "evaluation_questions.json"
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(QUESTIONS, f, indent=2)
+
+    print(f"Wrote {len(QUESTIONS)} questions to {out_path}")
+
+    # Validate all questions
+    counts = {}
+    type_counts = {}
+    for q in QUESTIONS:
+        pid = q["paper_id"] or "unanswerable"
+        counts[pid] = counts.get(pid, 0) + 1
+        qtype = q["question_type"]
+        type_counts[qtype] = type_counts.get(qtype, 0) + 1
+
+    print("\nBreakdown by Paper:")
+    for pid, c in sorted(counts.items()):
+        print(f"  {pid}: {c}")
+
+    print("\nBreakdown by Question Type:")
+    for qt, c in sorted(type_counts.items()):
+        print(f"  {qt}: {c}")
+
+if __name__ == "__main__":
+    main()

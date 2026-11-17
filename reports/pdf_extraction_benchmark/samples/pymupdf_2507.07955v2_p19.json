@@ -1,0 +1,460 @@
+{
+  "execution_time_ms": 76.75,
+  "char_count": 3829,
+  "total_blocks": 44,
+  "text_block_count": 44,
+  "image_block_count": 0,
+  "span_count": 268,
+  "unique_fonts": [
+    "Arial-BoldMT",
+    "ArialMT",
+    "LibertineMathMI",
+    "LinLibertineT",
+    "LinLibertineTB",
+    "LinLibertineTI",
+    "txsys"
+  ],
+  "raw_text_excerpt": "40B\n60B\n80B\n100B\n120B\n140B\nTotal Training Bytes\n0.82\n0.84\n0.86\n0.88\n0.90\n0.92\n0.94\nBits-per-byte\nT2-T2\nT1M2-M2T1\nM2T1-T1M2\nM4-M4\nFigure 9: SpaceByte++ encoder-decoder architecture ab-\nlation using raw byte inputs. We evaluate four encoder-\ndecoder (E0 −D0) configurations: M4-M4 , M2T1-T1M2 and\nT1M2-M2T1, and T2-T2, where M denotes Mamba layers\nand T denotes Transformer layers.\n40B\n60B\n80B\n100B\n120B\n140B\nTotal Training Bytes\n0.825\n0.850\n0.875\n0.900\n0.925\n0.950\n0.975\n1.000\nBits-per-byte\nT3-T3\nT2M2",
+  "structured_blocks": [
+    {
+      "block_no": 0,
+      "bbox": [
+        112.91,
+        203.94,
+        126.92,
+        216.9
+      ],
+      "text": "40B"
+    },
+    {
+      "block_no": 1,
+      "bbox": [
+        148.78,
+        203.94,
+        162.79,
+        216.9
+      ],
+      "text": "60B"
+    },
+    {
+      "block_no": 2,
+      "bbox": [
+        184.65,
+        203.94,
+        198.65,
+        216.9
+      ],
+      "text": "80B"
+    },
+    {
+      "block_no": 3,
+      "bbox": [
+        217.46,
+        203.94,
+        234.52,
+        218.67
+      ],
+      "text": "100B"
+    },
+    {
+      "block_no": 4,
+      "bbox": [
+        253.33,
+        203.94,
+        270.39,
+        218.67
+      ],
+      "text": "120B"
+    },
+    {
+      "block_no": 5,
+      "bbox": [
+        289.2,
+        203.94,
+        306.26,
+        218.67
+      ],
+      "text": "140B"
+    },
+    {
+      "block_no": 6,
+      "bbox": [
+        164.04,
+        217.27,
+        237.03,
+        227.95
+      ],
+      "text": "Total Training Bytes"
+    },
+    {
+      "block_no": 7,
+      "bbox": [
+        74.77,
+        187.05,
+        87.13,
+        195.5
+      ],
+      "text": "0.82"
+    },
+    {
+      "block_no": 8,
+      "bbox": [
+        74.77,
+        171.08,
+        87.13,
+        179.53
+      ],
+      "text": "0.84"
+    },
+    {
+      "block_no": 9,
+      "bbox": [
+        74.77,
+        155.11,
+        87.13,
+        163.56
+      ],
+      "text": "0.86"
+    },
+    {
+      "block_no": 10,
+      "bbox": [
+        74.77,
+        139.14,
+        87.13,
+        147.59
+      ],
+      "text": "0.88"
+    },
+    {
+      "block_no": 11,
+      "bbox": [
+        74.77,
+        123.17,
+        87.13,
+        131.62
+      ],
+      "text": "0.90"
+    },
+    {
+      "block_no": 12,
+      "bbox": [
+        74.77,
+        107.2,
+        87.13,
+        115.65
+      ],
+      "text": "0.92"
+    },
+    {
+      "block_no": 13,
+      "bbox": [
+        74.77,
+        91.23,
+        87.13,
+        99.68
+      ],
+      "text": "0.94"
+    },
+    {
+      "block_no": 14,
+      "bbox": [
+        172.05,
+        72.91,
+        229.01,
+        85.73
+      ],
+      "text": "Bits-per-byte"
+    },
+    {
+      "block_no": 15,
+      "bbox": [
+        265.17,
+        90.32,
+        302.88,
+        128.94
+      ],
+      "text": "T2-T2\nT1M2-M2T1\nM2T1-T1M2\nM4-M4"
+    },
+    {
+      "block_no": 16,
+      "bbox": [
+        71.7,
+        237.94,
+        313.69,
+        295.64
+      ],
+      "text": "Figure 9: SpaceByte++ encoder-decoder architecture ab-\nlation using raw byte inputs. We evaluate four encoder-\ndecoder (E0 −D0) configurations: M4-M4 , M2T1-T1M2 and\nT1M2-M2T1, and T2-T2, where M denotes Mamba layers\nand T denotes Transformer layers."
+    },
+    {
+      "block_no": 17,
+      "bbox": [
+        365.57,
+        203.93,
+        379.58,
+        216.9
+      ],
+      "text": "40B"
+    },
+    {
+      "block_no": 18,
+      "bbox": [
+        400.86,
+        203.93,
+        414.86,
+        216.9
+      ],
+      "text": "60B"
+    },
+    {
+      "block_no": 19,
+      "bbox": [
+        436.14,
+        203.93,
+        450.15,
+        216.9
+      ],
+      "text": "80B"
+    },
+    {
+      "block_no": 20,
+      "bbox": [
+        468.38,
+        203.93,
+        485.44,
+        218.66
+      ],
+      "text": "100B"
+    },
+    {
+      "block_no": 21,
+      "bbox": [
+        503.66,
+        203.93,
+        520.73,
+        218.66
+      ],
+      "text": "120B"
+    },
+    {
+      "block_no": 22,
+      "bbox": [
+        538.95,
+        203.93,
+        556.01,
+        218.66
+      ],
+      "text": "140B"
+    },
+    {
+      "block_no": 23,
+      "bbox": [
+        415.5,
+        217.27,
+        488.49,
+        227.95
+      ],
+      "text": "Total Training Bytes"
+    },
+    {
+      "block_no": 24,
+      "bbox": [
+        324.46,
+        189.69,
+        340.35,
+        198.15
+      ],
+      "text": "0.825"
+    },
+    {
+      "block_no": 25,
+      "bbox": [
+        324.46,
+        176.05,
+        340.35,
+        184.5
+      ],
+      "text": "0.850"
+    },
+    {
+      "block_no": 26,
+      "bbox": [
+        324.46,
+        162.41,
+        340.35,
+        170.86
+      ],
+      "text": "0.875"
+    },
+    {
+      "block_no": 27,
+      "bbox": [
+        324.46,
+        148.77,
+        340.35,
+        157.22
+      ],
+      "text": "0.900"
+    },
+    {
+      "block_no": 28,
+      "bbox": [
+        324.46,
+        135.13,
+        340.35,
+        143.58
+      ],
+      "text": "0.925"
+    },
+    {
+      "block_no": 29,
+      "bbox": [
+        324.46,
+        121.49,
+        340.35,
+        129.94
+      ],
+      "text": "0.950"
+    },
+    {
+      "block_no": 30,
+      "bbox": [
+        324.46,
+        107.85,
+        340.35,
+        116.3
+      ],
+      "text": "0.975"
+    },
+    {
+      "block_no": 31,
+      "bbox": [
+        324.46,
+        94.21,
+        340.35,
+        102.66
+      ],
+      "text": "1.000"
+    },
+    {
+      "block_no": 32,
+      "bbox": [
+        423.51,
+        72.91,
+        480.47,
+        85.73
+      ],
+      "text": "Bits-per-byte"
+    },
+    {
+      "block_no": 33,
+      "bbox": [
+        514.87,
+        90.32,
+        552.58,
+        148.54
+      ],
+      "text": "T3-T3\nT2M2-M2T2\nM2T2-T2M2\nT1M4-M4T1\nM4T1-T1M4\nM6-M6"
+    },
+    {
+      "block_no": 34,
+      "bbox": [
+        321.33,
+        237.75,
+        563.38,
+        295.63
+      ],
+      "text": "Figure 10: Encoder-decoder architecture ablation us-\ning BPE-tokenized inputs. Assuming that GPT-2 tok-\nenizer serves as the outermost encoder-decoder (i.e., E0-D0),\nwe evaluate six E1-D1 combinations: M6-M6, M4T1-T1M4,\nT1M4-M4T1, M2T2-T2M2, T2M2-M2T2, and T3-T3."
+    },
+    {
+      "block_no": 35,
+      "bbox": [
+        71.7,
+        319.05,
+        561.6,
+        341.27
+      ],
+      "text": "layer and T denotes a Transformer layer. These combinations are chosen by keeping the symmetry and replacing each\nTransformer layer with two Mamba-2 layers, as they contain equivalent parameter counts — 12𝐷2 for Transformer (4𝐷2"
+    },
+    {
+      "block_no": 36,
+      "bbox": [
+        72.0,
+        339.44,
+        438.04,
+        354.74
+      ],
+      "text": "for the attention mechanism and 8𝐷2 for an MLP) vs. ≈6𝐷2 per Mamba-2 layer (no MLP)."
+    },
+    {
+      "block_no": 37,
+      "bbox": [
+        71.7,
+        360.99,
+        561.79,
+        466.59
+      ],
+      "text": "Figure 8 and Figure 9 demonstrate that Mamba layers are essential for effective byte-level sequence processing. For both\nH-Net and SpaceByte++, the pure Transformer configuration (T2-T2) exhibits by far the worst performance\ndespite using more FLOPs (it also down-compresses sequences poorly compared to other configurations, thus using\nmore compute in the main network). This configuration struggles to compress byte sequences effectively, resulting in\nboth computational waste and degraded modeling performance. Performance improves monotonically with increased\nMamba layer allocation, achieving optimal results with the highest compression efficiency in the pure Mamba configuration\n(M4-M4). These findings align with recent research demonstrating SSMs’ advantages over Transformers for fine-grained\nsequence modeling (Goel et al. 2022; Schiff et al. 2024), as corroborated by MambaByte’s superior performance over\nLlamaByte in Figure 3."
+    },
+    {
+      "block_no": 38,
+      "bbox": [
+        71.65,
+        474.6,
+        561.6,
+        520.39
+      ],
+      "text": "A natural question arises: does the importance of Mamba layers (i) stem specifically from processing fine-grained byte\ninputs, or (ii) because they are better for compressing information into the next stage, even at coarser input\nresolutions? To investigate these hypotheses, we train a 1-stage H-Net on top of BPE-tokenized inputs processed by the\nGPT-2 tokenizer. We then evaluate six different encoder-decoder combinations."
+    },
+    {
+      "block_no": 39,
+      "bbox": [
+        88.43,
+        528.36,
+        563.28,
+        562.24
+      ],
+      "text": "• If hypothesis (i) holds, then we would expect different combinations of Mamba/Transformer layers in the encoder/de-\ncoder to have similar performance, since it is known that they have similar performance on standard tokenized\nlanguage modeling."
+    },
+    {
+      "block_no": 40,
+      "bbox": [
+        88.43,
+        570.15,
+        561.6,
+        592.12
+      ],
+      "text": "• If hypothesis (ii) holds, then we would expect that encoders/decoders using some Mamba layers to be better than\npure Transformer layers."
+    },
+    {
+      "block_no": 41,
+      "bbox": [
+        71.65,
+        600.13,
+        561.6,
+        622.01
+      ],
+      "text": "As demonstrated in Figure 10, Mamba layers prove significantly important even when processing BPE tokens rather than\nraw bytes, providing evidence for the second hypothesis."
+    },
+    {
+      "block_no": 42,
+      "bbox": [
+        71.52,
+        630.06,
+        561.6,
+        711.68
+      ],
+      "text": "We hypothesize that this consistent advantage across input granularities stems from fundamental architectural differences\nbetween SSMs and Transformers. While Transformers naturally store complete key-value caches for all positions, SSMs\nare designed to compress information into fixed-size states. This compression-oriented architecture aligns naturally with\nour chunking mechanism, which requires aggregating multiple input vectors into consolidated representations. The\ninherent compression capability of Mamba layers makes them particularly well-suited for the encoder and decoder roles in\nour hierarchical architecture (Gu 2025). Based on these findings, we employ Mamba layers throughout all encoders and\ndecoders in our final H-Net configuration, as detailed in Table 1."
+    },
+    {
+      "block_no": 43,
+      "bbox": [
+        312.17,
+        740.83,
+        321.43,
+        750.79
+      ],
+      "text": "19"
+    }
+  ]
+}

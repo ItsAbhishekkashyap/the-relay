@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: the-relay-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    envVars:
+      # Provider selection: 'groq' (real cloud inference) or 'simulator' (zero-cost stand-in)
+      - key: MODEL_PROVIDER
+        value: groq
+      
+      # Groq API Key (enter your actual key in the Render dashboard)
+      - key: GROQ_API_KEY
+        sync: false
+      
+      # Model identifier
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-120b
+
+      # CORS Configuration: allow your deployed Vercel frontend URL, or '*' for open access
+      - key: CORS_ORIGINS
+        value: "*"
+
+      # Port (Render injects PORT automatically, defaults to 8000)
+      - key: PORT
+        value: 8000

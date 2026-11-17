@@ -1,0 +1,9 @@
+{
+  "paper_id": "2410.00037v1",
+  "page_num": 33,
+  "execution_time_ms": 16257.06,
+  "table_count": 3,
+  "heading_count": 0,
+  "char_count": 4709,
+  "markdown_excerpt": "Table 10: Linguistic impact of model compression on Helium, as measured by MMLU. 'WXA8' indicates a model with weights quantized to 'X' bits and activations to 8 bits, using integer scalar PTQ. The model size in brackets is given in GygaBytes for a quantization block size of 32, and takes into account both the model weights and the quantization parameters stored in float16. With a fine enough granularity of quantization blocks, a 4 bits model stays within 2 points of MMLU of the floating point baseline.\n\n| BF16A8 - Bitwidth vs Block size   | (∼ 15GB) - Bitwidth vs Block size   |   54.3 - per-channel |   54.3 - 256 |   54.3 - 32 |\n|-----------------------------------|-------------------------------------|----------------------|--------------|-------------|\n| W8A8                              | (7.66GB)                            |                53.96 |        54.09 |       53.81 |\n| W6A8                              | (6.02GB)                            |                53.50 |        "
+}
