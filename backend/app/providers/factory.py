@@ -28,9 +28,15 @@ def create_model_provider(settings: Optional[AppSettings] = None) -> BaseModelPr
             default_model=cfg.groq_model,
         )
     elif provider_type == "simulator":
+        try:
+            from simulator.main import app as simulator_app
+        except ImportError:
+            simulator_app = None
+
         return SimulatorProvider(
             base_url=cfg.simulator_base_url,
             default_model=cfg.simulator_model,
+            app=simulator_app,
             timeout=cfg.simulator_timeout,
         )
     else:
