@@ -36,21 +36,36 @@ class LocalSentenceTransformerEmbeddingFunction(EmbeddingFunction[Documents]):
         model_instance: Any = None,
     ) -> None:
         self.model_name = model_name
-        if model_instance is not None:
-            self._model = model_instance
-        else:
+        self._model = model_instance
+
+    @property
+    def model(self) -> Any:
+        """Lazily load SentenceTransformer model on first actual retrieval call.
+
+        Ensures instant FastAPI startup and port binding (< 1 sec) on cloud hosts like Render,
+        preventing port scan timeouts. Limits PyTorch threads to stay within 512MB RAM.
+        """
+        if self._model is None:
+            try:
+                import torch
+                # Limit PyTorch internal threads to 1 to reduce memory arenas on Render free tier
+                torch.set_num_threads(1)
+            except Exception:
+                pass
+
             from sentence_transformers import SentenceTransformer
 
             try:
-                self._model = SentenceTransformer(model_name, local_files_only=True)
+                self._model = SentenceTransformer(self.model_name, local_files_only=True)
             except Exception:
                 try:
-                    # Fallback to remote download if not pre-cached locally (essential for Render/Docker deployments)
-                    self._model = SentenceTransformer(model_name, local_files_only=False)
+                    # Fallback to remote download if not pre-cached locally
+                    self._model = SentenceTransformer(self.model_name, local_files_only=False)
                 except Exception as exc:
                     raise RuntimeError(
-                        f"Failed to load embedding model '{model_name}': {exc}."
+                        f"Failed to load embedding model '{self.model_name}': {exc}."
                     ) from exc
+        return self._model
 
     @staticmethod
     def name() -> str:
@@ -67,7 +82,7 @@ class LocalSentenceTransformerEmbeddingFunction(EmbeddingFunction[Documents]):
         """Generate normalized dense embeddings for document texts."""
         if not input:
             return []
-        embeddings = self._model.encode(
+        embeddings = self.model.encode(
             list(input),
             convert_to_numpy=True,
             normalize_embeddings=True,

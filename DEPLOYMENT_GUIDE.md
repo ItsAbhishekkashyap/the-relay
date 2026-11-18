@@ -93,15 +93,22 @@ In your Vercel Project Dashboard, go to **Settings** > **Environment Variables**
    * **Region:** Select the region closest to your users (e.g., `Oregon (US West)` or `Frankfurt (EU)`).
    * **Branch:** `main` (or your active branch).
    * **Root Directory:** Type `backend` *(⚠️ Critical step: this tells Render to run inside the `backend/` folder)*.
-   * **Runtime:** Select **`Docker`** *(Recommended)*.
-     *(Render will automatically use `backend/Dockerfile`, which bakes in the SentenceTransformers embedding models and dependencies).*
-   * **Instance Type:** Select **Free**.
+   * **Runtime:** You can choose either **`Python`** *(Native)* or **`Docker`**:
+     * **If choosing `Python` (Native):**
+       * **Build Command:** `pip install -r requirements.txt && python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"`
+       * **Start Command:** `python run.py`
+     * **If choosing `Docker`:**
+       * Render automatically uses `backend/Dockerfile` with all pre-cached dependencies.
+   * **Instance Type:** Select **Free** (512MB RAM).
 4. **Add Environment Variables:**
    Scroll down to the **Environment Variables** section and add:
    * `MODEL_PROVIDER` = `groq` *(or `simulator`)*
    * `GROQ_API_KEY` = `gsk_your_groq_api_key_here` *(if using `groq`)*
    * `GROQ_MODEL` = `openai/gpt-oss-120b`
    * `CORS_ORIGINS` = `*`
+   * `PYTHON_VERSION` = `3.11.10`
+   * `MALLOC_ARENA_MAX` = `2` *(limits memory fragmentation to strictly stay within 512MB)*
+   * `WEB_CONCURRENCY` = `1`
 5. **Deploy:**
    * Click **Create Web Service**.
    * Render will build the container (takes ~2–3 minutes on first build).

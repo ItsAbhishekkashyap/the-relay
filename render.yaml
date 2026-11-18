@@ -2,13 +2,19 @@ services:
   - type: web
     name: the-relay-backend
     rootDir: backend
-    runtime: docker
-    dockerfilePath: Dockerfile
-    dockerContext: .
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
+    startCommand: python run.py
     plan: free
     region: oregon
     healthCheckPath: /health
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.10
+      - key: MALLOC_ARENA_MAX
+        value: "2"
+      - key: WEB_CONCURRENCY
+        value: "1"
       - key: MODEL_PROVIDER
         value: groq
       - key: GROQ_API_KEY
